@@ -24,13 +24,13 @@ Page({
         selectedIconPath: "/images/tabbar/home_active.png",
       }, {
         text: "动态",
-        iconPath: "/images/tabbar/me_default.png",
-        selectedIconPath: "/images/tabbar/me_active.png",
+        iconPath: "/images/tabbar/message_default.png",
+        selectedIconPath: "/images/tabbar/message_active.png",
       },
       {
         text: "我的",
-        iconPath: "/images/tabbar/message_default.png",
-        selectedIconPath: "/images/tabbar/message_active.png",
+        iconPath: "/images/tabbar/me_default.png",
+        selectedIconPath: "/images/tabbar/me_active.png",
         badge: 'New'
       }
     ]

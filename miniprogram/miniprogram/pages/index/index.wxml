@@ -15,23 +15,22 @@
     </scroll-view>
   </view>
   <view class="{{currentTab == 1 ? 'show':'hidden'}}">
-
-    <text>动态</text>
-
+      <view >动态</view>
   </view>
 
-  <view class="{{currentTab == 2 ? 'show':'hidden'}}" >
-    <view class="container">
-      <view class="userinfo">
-        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
-        <block wx:else>
-          <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-          <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-        </block>
+  <view class="{{currentTab == 2 ? 'show':'hidden'}}">
+    <!-- 用户 openid -->
+    <view class="userinfo">
+      <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})"></button>
+      <view>
+        <button class="userinfo-nickname" bindtap="onGetOpenid">点击登录</button>
       </view>
-      <view class="usermotto">
-        <text class="user-motto">{{motto}}</text>
-      </view>
+    </view>
+    <!-- 云调用 -->
+    <view class="uploader">
+      <navigator url="../develop/develop" open-type="navigate" class="uploader-text">
+        <text>开发者选项</text>
+      </navigator>
     </view>
 
   </view>

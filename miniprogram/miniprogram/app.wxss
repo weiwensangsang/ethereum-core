@@ -1,20 +1,5 @@
 /**app.wxss**/
 @import 'miniprogram_npm/_weui-miniprogram@0.1.6@weui-miniprogram/weui-wxss/dist/style/weui.wxss';
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-} 
-
-button {
-  background: initial;
-}
-
-button:focus{
-  outline: 0;
-}
-
-button::after{
-  border: none;
+.hidden {
+  display: none;
 }
