@@ -13,8 +13,10 @@ Page({
     scrollTop: 100,
     avatarUrl: './user-unlogin.png',
     userInfo: {},
+    hasUserInfo: false,
     logged: false,
     takeSession: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     requestResult: '',
     list: [{
         text: "首页",
@@ -32,6 +34,14 @@ Page({
         badge: 'New'
       }
     ]
+  },
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
   },
 
   onLoad: function() {

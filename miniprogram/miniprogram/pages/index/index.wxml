@@ -19,14 +19,21 @@
     <text>动态</text>
 
   </view>
-  <view class="{{currentTab == 2 ? 'show':'hidden'}}">
-    <view class="userinfo">
-      <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})"></button>
-      <view>
-        <button class="userinfo-nickname" bindtap="onGetOpenid">点击登录</button>
+
+  <view class="{{currentTab == 2 ? 'show':'hidden'}}" >
+    <view class="container">
+      <view class="userinfo">
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+        <block wx:else>
+          <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+          <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        </block>
+      </view>
+      <view class="usermotto">
+        <text class="user-motto">{{motto}}</text>
       </view>
     </view>
-  
+
   </view>
 
 
