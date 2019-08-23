@@ -7,7 +7,23 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    list: [{
+        text: "首页",
+        iconPath: "/images/tabbar/home_default.png",
+        selectedIconPath: "/images/tabbar/home_active.png",
+      }, {
+        text: "动态",
+        iconPath: "/images/tabbar/me_default.png",
+        selectedIconPath: "/images/tabbar/me_active.png",
+      },
+      {
+        text: "我的",
+        iconPath: "/images/tabbar/message_default.png",
+        selectedIconPath: "/images/tabbar/message_active.png",
+        badge: 'New'
+      }
+    ]
   },
 
   onLoad: function() {
@@ -68,20 +84,20 @@ Page({
   },
 
   // 上传图片
-  doUpload: function () {
+  doUpload: function() {
     // 选择图片
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
-      success: function (res) {
+      success: function(res) {
 
         wx.showLoading({
           title: '上传中',
         })
 
         const filePath = res.tempFilePaths[0]
-        
+
         // 上传图片
         const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
         wx.cloud.uploadFile({
@@ -93,7 +109,7 @@ Page({
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
-            
+
             wx.navigateTo({
               url: '../storageConsole/storageConsole'
             })
@@ -116,5 +132,8 @@ Page({
       }
     })
   },
+  tabChange(e) {
+    console.log('tab change', e)
+  }
 
 })
