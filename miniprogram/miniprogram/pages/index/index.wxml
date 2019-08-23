@@ -1,22 +1,32 @@
 <!--index.wxml-->
 <view class="container">
 
-  <view class = "{{currentTab == 0 ? 'show':'hidden'}}" >
-      <scroll-view class='sv' scroll-y='true' style='height:100%;'>
-    <button class='btn1'> <text class="hello">1</text></button>
-    <button class='btn2'> <text class="hello">2</text></button>
-    <button class='btn3'> <text class="hello">3</text></button>
-  </scroll-view>
-  </view>
-  <view class = "{{currentTab == 1 ? 'show':'hidden'}}" >
-    <scroll-view>
-      <text >动态</text>
+  <view class="{{currentTab == 0 ? 'show':'hidden'}}">
+    <scroll-view class='sv' scroll-y='true' style='height:100%;'>
+      <button class='btn1'>
+        <text class="hello">1</text>
+      </button>
+      <button class='btn2'>
+        <text class="hello">2</text>
+      </button>
+      <button class='btn3'>
+        <text class="hello">3</text>
+      </button>
     </scroll-view>
   </view>
-  <view class = "{{currentTab == 2 ? 'show':'hidden'}}">
-    <scroll-view>
-      <text>我的</text>
-    </scroll-view>
+  <view class="{{currentTab == 1 ? 'show':'hidden'}}">
+
+    <text>动态</text>
+
+  </view>
+  <view class="{{currentTab == 2 ? 'show':'hidden'}}">
+    <view class="userinfo">
+      <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})"></button>
+      <view>
+        <button class="userinfo-nickname" bindtap="onGetOpenid">点击登录</button>
+      </view>
+    </view>
+  
   </view>
 
 
