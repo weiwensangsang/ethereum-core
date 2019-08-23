@@ -3,6 +3,7 @@ const app = getApp()
 
 Page({
   data: {
+    currentTab: 0,
     loading: false,
     color: '#000',
     background: '#fff',
@@ -58,16 +59,16 @@ Page({
       }
     })
   },
-  upper: function (e) {
+  upper: function(e) {
     console.log(e)
   },
-  lower: function (e) {
+  lower: function(e) {
     console.log(e)
   },
-  scroll: function (e) {
+  scroll: function(e) {
     console.log(e)
   },
-  tap: function (e) {
+  tap: function(e) {
     for (var i = 0; i < order.length; ++i) {
       if (order[i] === this.data.toView) {
         this.setData({
@@ -77,7 +78,7 @@ Page({
       }
     }
   },
-  tapMove: function (e) {
+  tapMove: function(e) {
     this.setData({
       scrollTop: this.data.scrollTop + 10
     })
@@ -164,7 +165,15 @@ Page({
     })
   },
   tabChange(e) {
-    console.log('tab change', e)
+    // console.log('tab change', e);
+    var that = this;
+    if (this.data.currentTab === e.detail.index) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.detail.index,
+      })
+    }
   }
 
 })

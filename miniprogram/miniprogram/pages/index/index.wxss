@@ -7,24 +7,34 @@ page {
   justify-content: flex-start;
 }
 
-button::after{ 
-	border: none; 
+button::after {
+  border: none;
 }
 
 button {
-    margin-top: 20px;
-    border-radius: 30px;
+  margin-top: 20px;
+  border-radius: 30px;
+  width: 350px;
 }
 
 .btn1 {
-  background: #457fca; 
+  background: #457fca;
 }
 
 .btn2 {
-  background: #F15F79; 
+  background: #f15f79;
 }
 
 .btn3 {
-   /* 渐变色 */
+  /* 渐变色 */
   background: linear-gradient(to right, #f7b733, #fc4a1a);
+}
+
+.hidden {
+  display: none;
+}
+
+.hello {
+  font-size: 50rpx;
+  color: white;
 }
