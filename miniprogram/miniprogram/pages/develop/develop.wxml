@@ -29,13 +29,10 @@
     <view class="weui-cells__title">投票选项C</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <input id= 'vote_C' class="weui-input" bindinput = "inputData" placeholder="酱油通道"/>
+        <input id= 'vote_C' class="weui-input" bindinput = "inputData" placeholder="吃瓜通道"/>
       </view>
     </view>
   </view>
 
   <button class = "create-question-buttom" style="color: white" bindtap="createQusetion">创建问题</button>
-
-
-
 </view>

@@ -3,10 +3,10 @@ Page({
   data: {
     focus: false,
     inputValue: '',
-    name: '',
-    vote_A: "23",
-    vote_B: "23",
-    vote_C: "23",
+    name: '你会打呼噜吗？',
+    vote_A: "会",
+    vote_B: "不会",
+    vote_C: "吃瓜通道",
   },
   inputData: function(e) {
     var value = e.detail.value;
@@ -36,7 +36,6 @@ Page({
   createQusetion: function(e) {
    
     let that = this
-    console.log(that.data)
     wx.cloud.callFunction({
       // 要调用的云函数名称
       name: 'createQuestion',
@@ -48,9 +47,15 @@ Page({
         vote_C: that.data.vote_C
       }
     }).then(res => {
-      console.log(res.result)
+      wx.showToast({
+        title: "成功",
+        duration: 2000
+      })
     }).catch(err => {
-      console.log(err)
+      wx.showToast({
+        title: "失败",
+        duration: 2000
+      })
     })
   }
 })
