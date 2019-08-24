@@ -1,4 +1,10 @@
 /* miniprogram/pages/develop.wxss */
+
+.create-question-buttom {
+  background-color: rgb(47, 212, 47);
+  font-family: -apple-system-font, "Helvetica Neue", sans-serif;
+}
+
 page {
   background-color: #F8F8F8;
   height: 100%;
