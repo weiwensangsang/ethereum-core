@@ -1,40 +1,40 @@
 <!--miniprogram/pages/develop.wxml-->
 <view class="page-body">
   <view class="page-section">
-    <view class="weui-cells__title">输入投票</view>
+    <view class="weui-cells__title">输入问题</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <input class="weui-input" placeholder="你会打呼噜吗？"/>
+        <input id="name" class="weui-input" bindinput = "inputData" placeholder="你会打呼噜吗？"/>
       </view>
     </view>
   </view>
   <view class="page-section">
-    <view class="weui-cells__title">选项A</view>
+    <view class="weui-cells__title">投票选项A</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <input class="weui-input" placeholder="会"/>
+        <input id= 'vote_A' class="weui-input" bindinput = "inputData" placeholder="会"/>
       </view>
     </view>
   </view>
   <view class="page-section">
-    <view class="weui-cells__title">选项B</view>
+    <view class="weui-cells__title">投票选项B</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <input class="weui-input" placeholder="不会"/>
+        <input id= 'vote_B' class="weui-input" bindinput = "inputData" placeholder="不会"/>
       </view>
     </view>
   </view>
 
   <view class="page-section">
-    <view class="weui-cells__title">选项C</view>
+    <view class="weui-cells__title">投票选项C</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <input class="weui-input" placeholder="酱油通道"/>
+        <input id= 'vote_C' class="weui-input" bindinput = "inputData" placeholder="酱油通道"/>
       </view>
     </view>
   </view>
 
-  <button  class = "create-question-buttom" style="color: white">创建投票</button>
+  <button class = "create-question-buttom" style="color: white" bindtap="createQusetion">创建问题</button>
 
 
 
