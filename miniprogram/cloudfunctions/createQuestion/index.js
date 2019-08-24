@@ -11,7 +11,8 @@ exports.main = async (event, context) => {
       name: event.name,
       vote_A: event.vote_A,
       vote_B: event.vote_B,
-      vote_C: event.vote_C
+      vote_C: event.vote_C,
+      createTime: new Date()
     }
   })
 
