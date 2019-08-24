@@ -1,5 +1,4 @@
 /**app.wxss**/
-@import 'miniprogram_npm/_weui-miniprogram@0.1.6@weui-miniprogram/weui-wxss/dist/style/weui.wxss';
 .hidden {
   display: none;
 }
