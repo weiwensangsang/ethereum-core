@@ -3,6 +3,14 @@ const app = getApp()
 
 Page({
   data: {
+    pageIndex: 1,
+    pageSize: 10,
+    pageCount: 0,
+    amount: 0,
+    list: [],
+
+
+
     currentTab: 0,
     loading: false,
     color: '#000',
@@ -22,7 +30,7 @@ Page({
     requestResult: '',
     list: [{
         text: "首页",
-        iconPath: "/images/tabbar/home_default.png",
+        iconPath: "../images/tabbar/home_default.png",
         selectedIconPath: "/images/tabbar/home_active.png",
       }, {
         text: "动态",
@@ -37,7 +45,7 @@ Page({
       }
     ]
   },
-  getUserInfo: function (e) {
+  getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -49,7 +57,7 @@ Page({
   onLoad: function() {
     var that = this;
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         that.setData({
           windowHeight: res.windowHeight
         });
@@ -59,17 +67,27 @@ Page({
     query.select('#tabbar').boundingClientRect();
     query.exec((res) => {
       that.setData({
-
         scrollViewHeight: that.data.windowHeight - res[0].height
       })
     })
+    this.getData();
+  },
+
+  getData: function() {
+
   },
 
   upper: function(e) {
-    console.log(e)
+    this.data.pageIndex = 1;
+    this.getData()
   },
   lower: function(e) {
-    console.log(e)
+    if (this.data.pageIndex < this.data.pageCount) {
+      this.data.pageIndex++;
+      this.getData();
+    } else {
+      console.log("没数据了")
+    }
   },
 
   onGetUserInfo: function(e) {
@@ -91,6 +109,44 @@ Page({
         currentTab: e.detail.index,
       })
     }
+  },
+
+  getData: function() {
+    var that = this;
+    if (that.pageIndex == 1) {
+      console.log("获取中")
+    }
+    wx.cloud.callFunction({
+      // 要调用的云函数名称
+      name: 'getQuestions',
+      // 传递给云函数的event参数
+      data: {
+        pageIndex: that.data.pageIndex,
+        pageSize: that.data.pageSize
+      }
+    }).then(res => {
+      var data = res.result;
+      console.log(data)
+      var tempList = data.list;
+      var tempPageIndex = data.pageIndex;
+      if (that.data.pageIndex == 1) { // 下拉刷新
+        tempList = data.list;
+        tempPageIndex = 1;
+        wx.stopPullDownRefresh();
+      } else { // 加载更多
+        tempList = tempList.concat(datat.list)
+        tempPageIndex += 1;
+      }
+      that.setData({
+        pageIndex: tempPageIndex,
+        pageSize: data.pageSize,
+        pageCount: data.pageCount,
+        amount: data.amount,
+        list: tempList
+      })
+    }).catch(err => {
+      console.log("error")
+    })
   }
 
 })
