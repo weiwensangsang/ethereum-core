@@ -3,7 +3,11 @@
 
   <view class="{{currentTab == 0 ? 'show':'hidden'}}">
     <scroll-view scroll-y='true' style='height:{{scrollViewHeight}}px;overflow: auto' bindscrolltoupper="upper" bindscrolltolower="lower">
-      
+      <view wx:for = "list">
+        <view class="btn3">
+          <text>{{item.name}}</text>
+        </view>
+      </view>
     </scroll-view>
   </view>
   <view class="{{currentTab == 1 ? 'show':'hidden'}}">
@@ -28,6 +32,6 @@
   </view>
 
 
-  <mp-tabbar id= "tabbar" style="position:fixed;bottom:0;width:100%;left:0;right:0;" list="{{list}}" bindchange="tabChange"></mp-tabbar>
+  <mp-tabbar id="tabbar" style="position:fixed;bottom:0;width:100%;left:0;right:0;" list="{{list}}" bindchange="tabChange"></mp-tabbar>
 
 </view>
