@@ -2,7 +2,61 @@
 <view class="container">
 
   <view class="{{currentTab == 0 ? 'show':'hidden'}}">
-    <scroll-view class='sv' scroll-y='true' style='height:100%;'>
+    <scroll-view scroll-y='true' style='height:{{scrollViewHeight}}px;overflow: auto' bindscrolltoupper="upper" bindscrolltolower="lower">
+      <button class='btn1'>
+        <text class="hello">1</text>
+      </button>
+      <button class='btn2'>
+        <text class="hello">2</text>
+      </button>
+      <button class='btn3'>
+        <text class="hello">3</text>
+      </button>
+       <button class='btn1'>
+        <text class="hello">1</text>
+      </button>
+      <button class='btn2'>
+        <text class="hello">2</text>
+      </button>
+      <button class='btn3'>
+        <text class="hello">3</text>
+      </button>
+       <button class='btn1'>
+        <text class="hello">1</text>
+      </button>
+      <button class='btn2'>
+        <text class="hello">2</text>
+      </button>
+      <button class='btn3'>
+        <text class="hello">3</text>
+      </button>
+       <button class='btn1'>
+        <text class="hello">1</text>
+      </button>
+      <button class='btn2'>
+        <text class="hello">2</text>
+      </button>
+      <button class='btn3'>
+        <text class="hello">3</text>
+      </button>
+      <button class='btn1'>
+        <text class="hello">1</text>
+      </button>
+      <button class='btn2'>
+        <text class="hello">2</text>
+      </button>
+      <button class='btn3'>
+        <text class="hello">3</text>
+      </button>
+      <button class='btn1'>
+        <text class="hello">1</text>
+      </button>
+      <button class='btn2'>
+        <text class="hello">2</text>
+      </button>
+      <button class='btn3'>
+        <text class="hello">3</text>
+      </button>
       <button class='btn1'>
         <text class="hello">1</text>
       </button>
@@ -15,7 +69,7 @@
     </scroll-view>
   </view>
   <view class="{{currentTab == 1 ? 'show':'hidden'}}">
-      <view >动态</view>
+    <view>动态</view>
   </view>
 
   <view class="{{currentTab == 2 ? 'show':'hidden'}}">
@@ -36,6 +90,6 @@
   </view>
 
 
-  <mp-tabbar style="position:fixed;bottom:0;width:100%;left:0;right:0;" list="{{list}}" bindchange="tabChange"></mp-tabbar>
+  <mp-tabbar id= "tabbar" style="position:fixed;bottom:0;width:100%;left:0;right:0;" list="{{list}}" bindchange="tabChange"></mp-tabbar>
 
 </view>
