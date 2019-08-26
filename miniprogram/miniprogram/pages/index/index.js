@@ -65,18 +65,18 @@ Page({
     query.select('#tabbar').boundingClientRect();
     query.exec((res) => {
       that.setData({
-
         scrollViewHeight: that.data.windowHeight - res[0].height
       })
     })
     this.getData()
   },
-
-  upper: function(e) {
+  
+  upper: function (e) {
     this.data.pageIndex = 1;
     this.getData()
   },
-  lower: function(e) {
+
+  lower: function (e) {
     if (this.data.pageIndex < this.data.pageCount) {
       this.data.pageIndex++;
       this.getData();
@@ -110,6 +110,7 @@ Page({
     if (that.pageIndex == 1) {
       console.log("获取中")
     }
+    console.log(that.data.pageIndex)
     wx.cloud.callFunction({
       // 要调用的云函数名称
       name: 'getQuestions',
@@ -120,15 +121,13 @@ Page({
       }
     }).then(res => {
       var data = res.result;
-      console.log(data)
       var tempList = data.list;
       var tempPageIndex = data.pageIndex;
       if (that.data.pageIndex == 1) { // 下拉刷新
         tempList = data.list;
         tempPageIndex = 1;
-        wx.stopPullDownRefresh();
       } else { // 加载更多
-        tempList = tempList.concat(datat.list)
+        tempList = tempList.concat(data.list)
         tempPageIndex += 1;
       }
       that.setData({
@@ -139,7 +138,7 @@ Page({
         list: tempList
       })
     }).catch(err => {
-      console.log("error")
+      console.log(err)
     })
   }
 

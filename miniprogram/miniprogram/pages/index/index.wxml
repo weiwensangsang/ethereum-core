@@ -5,9 +5,9 @@
     <scroll-view scroll-y='true' style='height:{{scrollViewHeight}}px;overflow: auto' bindscrolltoupper="upper" bindscrolltolower="lower">
     
       <view wx:for = "{{list}}">
-        <view class="btn3">
+        <button class="btn3">
           <text>{{item.name}}</text>
-        </view>
+        </button>
       </view>
     </scroll-view>
   </view>
