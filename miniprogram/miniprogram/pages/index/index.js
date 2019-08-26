@@ -26,7 +26,7 @@ Page({
     scrollViewHeight: 0,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     requestResult: '',
-    list: [{
+    tabList: [{
         text: "首页",
         iconPath: "/images/tabbar/home_default.png",
         selectedIconPath: "/images/tabbar/home_active.png",
@@ -69,6 +69,7 @@ Page({
         scrollViewHeight: that.data.windowHeight - res[0].height
       })
     })
+    this.getData()
   },
 
   upper: function(e) {
