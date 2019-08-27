@@ -3,11 +3,12 @@
 
   <view class="{{currentTab == 0 ? 'show':'hidden'}}">
     <scroll-view scroll-y='true' style='height:{{scrollViewHeight}}px;overflow: auto' bindscrolltoupper="upper" bindscrolltolower="lower">
-    
-      <view wx:for = "{{list}}">
-        <button class="btn3">
-          <text>{{item.name}}</text>
-        </button>
+
+      <view wx:for="{{list}}" wx:key="name">
+        <i-card title="{{item.name}}" extra="{{item.vote_A}}" thumb="https://i.loli.net/2017/08/21/599a521472424.jpg">
+          <view slot="content">{{item.vote_B}}</view>
+          <view slot="footer">{{item.vote_C}}</view>
+        </i-card>
       </view>
     </scroll-view>
   </view>

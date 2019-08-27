@@ -78,7 +78,9 @@ Page({
 
   lower: function (e) {
     if (this.data.pageIndex < this.data.pageCount) {
+
       this.data.pageIndex++;
+
       this.getData();
     } else {
       console.log("没数据了")
@@ -110,7 +112,6 @@ Page({
     if (that.pageIndex == 1) {
       console.log("获取中")
     }
-    console.log(that.data.pageIndex)
     wx.cloud.callFunction({
       // 要调用的云函数名称
       name: 'getQuestions',
@@ -123,12 +124,15 @@ Page({
       var data = res.result;
       var tempList = data.list;
       var tempPageIndex = data.pageIndex;
+      console.log('tempPageIndex ' + tempPageIndex)
       if (that.data.pageIndex == 1) { // 下拉刷新
         tempList = data.list;
         tempPageIndex = 1;
       } else { // 加载更多
         tempList = tempList.concat(data.list)
         tempPageIndex += 1;
+        console.log('tempPageIndex ' + tempPageIndex)
+
       }
       that.setData({
         pageIndex: tempPageIndex,
@@ -137,6 +141,9 @@ Page({
         amount: data.amount,
         list: tempList
       })
+
+      console.log('pageIndex ' + this.data.pageIndex)
+
     }).catch(err => {
       console.log(err)
     })
