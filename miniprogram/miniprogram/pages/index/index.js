@@ -121,29 +121,23 @@ Page({
         pageSize: that.data.pageSize
       }
     }).then(res => {
-      var data = res.result;
-      var tempList = data.list;
-      var tempPageIndex = data.pageIndex;
-      console.log('tempPageIndex ' + tempPageIndex)
+      var vm = res.result;
+      var tempList = that.data.list;
+      var tempPageIndex = that.data.pageIndex;
       if (that.data.pageIndex == 1) { // 下拉刷新
-        tempList = data.list;
+        tempList = vm.list;
         tempPageIndex = 1;
       } else { // 加载更多
-        tempList = tempList.concat(data.list)
+        tempList = tempList.concat(vm.list)
         tempPageIndex += 1;
-        console.log('tempPageIndex ' + tempPageIndex)
-
       }
       that.setData({
         pageIndex: tempPageIndex,
-        pageSize: data.pageSize,
-        pageCount: data.pageCount,
-        amount: data.amount,
+        pageSize: vm.pageSize,
+        pageCount: vm.pageCount,
+        amount: vm.amount,
         list: tempList
       })
-
-      console.log('pageIndex ' + this.data.pageIndex)
-
     }).catch(err => {
       console.log(err)
     })

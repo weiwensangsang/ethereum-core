@@ -19,7 +19,7 @@ exports.main = async(event, context) => {
   var list = await db.collection('question')
     .orderBy('createTime', 'desc')
     .skip((pageIndex - 1) * pageSize)
-    .limit(pageSize) // 限制返回数量为 5 条
+    .limit(pageSize)
     .get().then(res => {
       return res.data
     })
