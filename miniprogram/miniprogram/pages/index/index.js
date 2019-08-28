@@ -70,7 +70,7 @@ Page({
         scrollViewHeight: that.data.windowHeight - res[0].height
       })
     })
-    this.getData()
+    this.getData('top')
   },
   
   upper: function (e) {
@@ -83,7 +83,7 @@ Page({
   scrollPull: function () {
     $Message({
       content: '这是一条成功提醒',
-      //type: 'warning'
+      type: 'success'
     });
 
   },
@@ -120,7 +120,6 @@ Page({
     }
   },
   getData: function(direction) {
-    console.log(direction)
     var that = this;
     if (that.pageIndex == 1) {
       console.log("获取中")
