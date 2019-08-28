@@ -1,5 +1,6 @@
 //index.js
 const app = getApp()
+const { $Message } = require('../../iview/dist/base/index');
 
 Page({
   data: {
@@ -8,6 +9,7 @@ Page({
     pageCount: 0,
     amount: 0,
     list: [],
+    showTopLoad: false,
 
     currentTab: 0,
     loading: false,
@@ -72,19 +74,29 @@ Page({
   },
   
   upper: function (e) {
+    console.log(e)
     this.data.pageIndex = 1;
-    this.getData()
+    this.getData('top')
+    this.scrollPull();
+  },
+
+  scrollPull: function () {
+    $Message({
+      content: '这是一条成功提醒',
+      //type: 'warning'
+    });
+
   },
 
   lower: function (e) {
-    if (this.data.pageIndex < this.data.pageCount) {
+    // if (this.data.pageIndex < this.data.pageCount) {
 
-      this.data.pageIndex++;
+    //   this.data.pageIndex++;
 
-      this.getData();
-    } else {
-      console.log("没数据了")
-    }
+    //   this.getData();
+    // } else {
+    //   console.log("没数据了")
+    // }
   },
 
   onGetUserInfo: function(e) {
@@ -107,7 +119,8 @@ Page({
       })
     }
   },
-  getData: function() {
+  getData: function(direction) {
+    console.log(direction)
     var that = this;
     if (that.pageIndex == 1) {
       console.log("获取中")
@@ -124,7 +137,7 @@ Page({
       var vm = res.result;
       var tempList = that.data.list;
       var tempPageIndex = that.data.pageIndex;
-      if (that.data.pageIndex == 1) { // 下拉刷新
+      if (that.data.pageIndex == 1) {
         tempList = vm.list;
         tempPageIndex = 1;
       } else { // 加载更多
