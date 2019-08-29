@@ -1,6 +1,8 @@
 //index.js
 const app = getApp()
-const { $Message } = require('../../iview/dist/base/index');
+const {
+  $Message
+} = require('../../iview/dist/base/index');
 
 Page({
   data: {
@@ -72,23 +74,44 @@ Page({
     })
     this.getData('top')
   },
-  
-  upper: function (e) {
-    console.log(e)
+
+  upper: function(e) {
     this.data.pageIndex = 1;
-    this.getData('top')
-    this.scrollPull();
+    var that = this;
+    console.log("获取中")
+    wx.cloud.callFunction({
+      // 要调用的云函数名称
+      name: 'getQuestions',
+      // 传递给云函数的event参数
+      data: {
+        pageIndex: that.data.pageIndex,
+        pageSize: that.data.pageSize
+      }
+    }).then(res => {
+      var vm = res.result;
+      var tempList = that.data.list;
+      var tempPageIndex = that.data.pageIndex;
+      tempList = vm.list;
+      tempPageIndex = 1;
+      that.setData({
+        pageIndex: tempPageIndex,
+        pageSize: vm.pageSize,
+        pageCount: vm.pageCount,
+        amount: vm.amount,
+        list: tempList
+      })
+      console.log('获取完第一页')
+      this.showTopLoad = false;
+    }).catch(err => {
+      console.log(err)
+    })
   },
 
-  scrollPull: function () {
-    $Message({
-      content: '这是一条成功提醒',
-      type: 'success'
-    });
 
-  },
 
-  lower: function (e) {
+
+
+  lower: function(e) {
     // if (this.data.pageIndex < this.data.pageCount) {
 
     //   this.data.pageIndex++;
