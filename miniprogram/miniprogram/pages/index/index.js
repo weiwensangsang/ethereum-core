@@ -100,8 +100,8 @@ Page({
       })
       wx.hideToast()
       $Message({
-        content: '已更新',
-        type: 'success'
+        content: '已经是最新了',
+        type: 'default'
       });
     }).catch(err => {
       console.error(err)
@@ -149,7 +149,7 @@ Page({
       })
 
     } else {
-      console.log('到底了')
+     
     }
   },
 
