@@ -87,6 +87,7 @@ Page({
     }).then(res => {
       var vm = res.result;
       var tempList = that.data.list;
+
       var tempPageIndex = that.data.pageIndex;
       tempList = vm.list;
       tempPageIndex = 1;
@@ -99,7 +100,7 @@ Page({
       })
       wx.hideToast()
       $Message({
-        content: 'Battle已更新',
+        content: '已更新',
         type: 'success'
       });
     }).catch(err => {
@@ -115,11 +116,9 @@ Page({
     if (this.data.pageIndex < this.data.pageCount) {
       wx.showToast({
         title: '加载中',
-        icon: 'loading',
-        duration: 4000
+        icon: 'loading'
       })
       this.data.pageIndex++;
-
       var that = this;
       wx.cloud.callFunction({
         // 要调用的云函数名称
@@ -144,25 +143,13 @@ Page({
           amount: vm.amount,
           list: tempList
         })
-        setTimeout(function() {
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 1000
-          })
-        }, 500)
+        wx.hideToast()
       }).catch(err => {
         console.log(err)
       })
 
     } else {
-      setTimeout(function() {
-        wx.showToast({
-          title: '到底了',
-          icon: 'success',
-          duration: 2000
-        })
-      }, 500)
+      console.log('到底了')
     }
   },
 
