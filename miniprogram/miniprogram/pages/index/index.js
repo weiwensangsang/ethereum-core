@@ -54,7 +54,7 @@ Page({
   setPage: function() {
     var that = this;
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         that.setData({
           windowHeight: res.windowHeight
         });
@@ -71,9 +71,8 @@ Page({
 
   upper: function(e) {
     wx.showToast({
-      title: '刷新中',
-      icon: 'loading',
-      duration: 2000
+      title: '加载中',
+      icon: 'loading'
     });
     this.data.pageIndex = 1;
     var that = this;
@@ -98,15 +97,13 @@ Page({
         amount: vm.amount,
         list: tempList
       })
-      setTimeout(function() {
-        wx.showToast({
-          title: '已更新',
-          icon: 'success',
-          duration: 500
-        })
-      }, 500)
+      wx.hideToast()
+      $Message({
+        content: 'Battle已更新',
+        type: 'success'
+      });
     }).catch(err => {
-      console.errpe(err)
+      console.error(err)
     })
   },
 
@@ -117,7 +114,7 @@ Page({
   lower: function(e) {
     if (this.data.pageIndex < this.data.pageCount) {
       wx.showToast({
-        title: '下一页',
+        title: '加载中',
         icon: 'loading',
         duration: 4000
       })
@@ -147,7 +144,13 @@ Page({
           amount: vm.amount,
           list: tempList
         })
-        
+        setTimeout(function() {
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 1000
+          })
+        }, 500)
       }).catch(err => {
         console.log(err)
       })
