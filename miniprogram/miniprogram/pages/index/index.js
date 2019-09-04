@@ -11,8 +11,6 @@ Page({
     pageCount: 0,
     amount: 0,
     list: [],
-    showTopLoad: false,
-
     currentTab: 0,
     loading: false,
     color: '#000',
@@ -47,19 +45,16 @@ Page({
       }
     ]
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
 
   onLoad: function() {
+    this.setPage()
+    this.upper();
+  },
+
+  setPage: function() {
     var that = this;
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         that.setData({
           windowHeight: res.windowHeight
         });
@@ -72,13 +67,16 @@ Page({
         scrollViewHeight: that.data.windowHeight - res[0].height
       })
     })
-    this.getData('top')
   },
 
   upper: function(e) {
+    wx.showToast({
+      title: '刷新中',
+      icon: 'loading',
+      duration: 2000
+    });
     this.data.pageIndex = 1;
     var that = this;
-    console.log("获取中")
     wx.cloud.callFunction({
       // 要调用的云函数名称
       name: 'getQuestions',
@@ -100,10 +98,15 @@ Page({
         amount: vm.amount,
         list: tempList
       })
-      console.log('获取完第一页')
-      this.showTopLoad = false;
+      setTimeout(function() {
+        wx.showToast({
+          title: '已更新',
+          icon: 'success',
+          duration: 500
+        })
+      }, 500)
     }).catch(err => {
-      console.log(err)
+      console.errpe(err)
     })
   },
 
@@ -112,14 +115,52 @@ Page({
 
 
   lower: function(e) {
-    // if (this.data.pageIndex < this.data.pageCount) {
+    if (this.data.pageIndex < this.data.pageCount) {
+      wx.showToast({
+        title: '下一页',
+        icon: 'loading',
+        duration: 4000
+      })
+      this.data.pageIndex++;
 
-    //   this.data.pageIndex++;
+      var that = this;
+      wx.cloud.callFunction({
+        // 要调用的云函数名称
+        name: 'getQuestions',
+        // 传递给云函数的event参数
+        data: {
+          pageIndex: that.data.pageIndex,
+          pageSize: that.data.pageSize
+        }
+      }).then(res => {
+        var vm = res.result;
+        var tempList = that.data.list;
+        var tempPageIndex = that.data.pageIndex;
 
-    //   this.getData();
-    // } else {
-    //   console.log("没数据了")
-    // }
+        tempList = tempList.concat(vm.list)
+        tempPageIndex += 1;
+
+        that.setData({
+          pageIndex: tempPageIndex,
+          pageSize: vm.pageSize,
+          pageCount: vm.pageCount,
+          amount: vm.amount,
+          list: tempList
+        })
+        
+      }).catch(err => {
+        console.log(err)
+      })
+
+    } else {
+      setTimeout(function() {
+        wx.showToast({
+          title: '到底了',
+          icon: 'success',
+          duration: 2000
+        })
+      }, 500)
+    }
   },
 
   onGetUserInfo: function(e) {
@@ -141,41 +182,5 @@ Page({
         currentTab: e.detail.index,
       })
     }
-  },
-  getData: function(direction) {
-    var that = this;
-    if (that.pageIndex == 1) {
-      console.log("获取中")
-    }
-    wx.cloud.callFunction({
-      // 要调用的云函数名称
-      name: 'getQuestions',
-      // 传递给云函数的event参数
-      data: {
-        pageIndex: that.data.pageIndex,
-        pageSize: that.data.pageSize
-      }
-    }).then(res => {
-      var vm = res.result;
-      var tempList = that.data.list;
-      var tempPageIndex = that.data.pageIndex;
-      if (that.data.pageIndex == 1) {
-        tempList = vm.list;
-        tempPageIndex = 1;
-      } else { // 加载更多
-        tempList = tempList.concat(vm.list)
-        tempPageIndex += 1;
-      }
-      that.setData({
-        pageIndex: tempPageIndex,
-        pageSize: vm.pageSize,
-        pageCount: vm.pageCount,
-        amount: vm.amount,
-        list: tempList
-      })
-    }).catch(err => {
-      console.log(err)
-    })
   }
-
 })
