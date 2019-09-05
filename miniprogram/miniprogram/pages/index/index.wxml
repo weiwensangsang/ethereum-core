@@ -9,13 +9,13 @@
         <i-load-more />
       </view>
       <view wx:for="{{list}}" wx:for-index="index" wx:key="name">
-        <view id="card-{{index}}" style='margin:20rpx 0'>
+        <navigator url="../question/question" open-type="navigate"  id="card-{{index}}" style='margin:20rpx 0'>
           <i-card title="{{item.name}}"  full = 'true'>
             <view slot="content"> 傻猪宝宝：我投{{item.vote_A}}，因为是的hi上帝</view>
 
-            <view slot="footer"> 1213人下场Battle</view>
+            <view slot="footer"> 已有1213人下场Battle</view>
           </i-card>
-        </view>
+        </navigator>
       </view>
       <view class="{{ amount != 0 ? 'show':'hidden'}} ">
         <i-load-more tip="{{ pageIndex < pageCount ? '正在加载': '到底了'}}" loading="{{ pageIndex < pageCount }}" />
