@@ -1,4 +1,4 @@
 <!--miniprogram/pages/develop.wxml-->
 <view class="page-body">
-  <text>{{_id}}</text>
+  <text>{{name}}</text>
 </view>

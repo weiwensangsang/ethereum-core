@@ -9,7 +9,7 @@
         <i-load-more />
       </view>
       <view wx:for="{{list}}" wx:for-index="index" wx:key="name">
-        <navigator url="../question/question?_id={{item._id}}" open-type="navigate"  id="card-{{index}}" style='margin:20rpx 0'>
+        <navigator url="../question/question?_id={{item._id}}&name={{item.name}}" open-type="navigate"  id="card-{{index}}" style='margin:20rpx 0'>
           <i-card title="{{item.name}}"  full = 'true'>
             <view slot="content"> 傻猪宝宝：我投{{item.vote_A}}，因为是的hi上帝</view>
 
