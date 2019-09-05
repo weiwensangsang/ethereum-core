@@ -17,7 +17,7 @@ Page({
     background: '#fff',
     show: true,
     animated: false,
-    toView: 'red',
+    toView: "card-0",
     scrollTop: 100,
     avatarUrl: './user-unlogin.png',
     userInfo: {},
@@ -70,10 +70,6 @@ Page({
   },
 
   upper: function(e) {
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading'
-    });
     this.data.pageIndex = 1;
     var that = this;
     wx.cloud.callFunction({
@@ -98,7 +94,9 @@ Page({
         amount: vm.amount,
         list: tempList
       })
-      wx.hideToast()
+      this.setData({
+        toView: "card-0"
+      })
       $Message({
         content: '已经是最新了',
         type: 'default'
@@ -114,10 +112,6 @@ Page({
 
   lower: function(e) {
     if (this.data.pageIndex < this.data.pageCount) {
-      wx.showToast({
-        title: '加载中',
-        icon: 'loading'
-      })
       this.data.pageIndex++;
       var that = this;
       wx.cloud.callFunction({
@@ -143,7 +137,6 @@ Page({
           amount: vm.amount,
           list: tempList
         })
-        wx.hideToast()
       }).catch(err => {
         console.log(err)
       })
