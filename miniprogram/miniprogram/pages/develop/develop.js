@@ -41,7 +41,7 @@ Page({
       name: 'createQuestion',
       // 传递给云函数的event参数
       data: {
-        name: that.data.name + Math.floor(Math.random() * 1000000 + 1),
+        name: that.data.name,
         vote_A: that.data.vote_A,
         vote_B: that.data.vote_B,
         vote_C: that.data.vote_C
