@@ -2,13 +2,13 @@ import hashlib
 
 import requests
 
-from util.logUtil import debug
-from util.video import Video
+from util.util import time
+from util.video_concatenate import Video
 
 
-def getVideoUrls(keyword, page):
-    print(debug(), '抓取关键字:"' + keyword + '", 抓取页数:' + page)
-    print(debug(), '开始构造签名...')
+def get_video_url(keyword, page):
+    print(time(), '抓取关键字:"' + keyword + '", 抓取页数:' + page)
+    print(time(), '开始构造签名...')
     params = {
         'isp': 'CMCC',
         'mod': 'oppo(a37f)',
@@ -43,10 +43,9 @@ def getVideoUrls(keyword, page):
         params.update({'pcursor': page})
     sig = get_sig(params)
     params.update({'sig': sig})
-    print(debug(), '签名构造成功，开始数据抓取...')
+    print(time(), '签名构造成功，开始数据抓取...')
     r = requests.post("http://api.gifshow.com/rest/n/search", params=params)
-    #print(r.text)
-    print(debug(), '数据抓取成功，开始视频链接解析...')
+    print(time(), '数据抓取成功，开始视频链接解析...')
     result = []
     for item in r.json().get('feeds'):
         if 'main_mv_urls' in item.keys():
