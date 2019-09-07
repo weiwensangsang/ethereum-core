@@ -32,5 +32,5 @@ def concatenate(videos):
 def get_sum_name(name):
     index = name.rfind('\\')
     path = name[0: index]
-    file_name = path[path.rfind('\\'): len(path) - 1]
+    file_name = path[path.rfind('\\'): len(path)]
     return path + '\\' + file_name + '.mp4'
