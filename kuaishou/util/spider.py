@@ -1,13 +1,14 @@
 import hashlib
 
 import requests
-import json
-from util.logUtil import now
+
+from util.logUtil import debug
+from util.video import Video
 
 
 def getVideoUrls(keyword, page):
-    print(now(), '抓取关键字:"' + keyword + '", 抓取页数:"' + page + '"')
-    print(now(), '开始构造签名...')
+    print(debug(), '抓取关键字:"' + keyword + '", 抓取页数:' + page)
+    print(debug(), '开始构造签名...')
     params = {
         'isp': 'CMCC',
         'mod': 'oppo(a37f)',
@@ -38,22 +39,22 @@ def getVideoUrls(keyword, page):
         'token': '06838c45daaa4613af222815af9f2d23-1487941148',
         'os': 'android'
     }
+    if int(page) > 0:
+        params.update({'pcursor': page})
     sig = get_sig(params)
     params.update({'sig': sig})
-    print(now(), '构造签名成功，开始抓取数据...')
+    print(debug(), '签名构造成功，开始数据抓取...')
     r = requests.post("http://api.gifshow.com/rest/n/search", params=params)
-    print(r.text)
-    print(now(), '数据抓取成功，开始解析视频链接...')
-    urls = []
-    captions = []
+    #print(r.text)
+    print(debug(), '数据抓取成功，开始视频链接解析...')
+    result = []
     for item in r.json().get('feeds'):
         if 'main_mv_urls' in item.keys():
-            url = item.get('main_mv_urls')[0].get('url')
-            caption = item.get('caption')
-            print(caption)
-            print(url + '\n')
-            captions.append(caption)
-            urls.append(url)
+            v = Video(item.get('photo_id'), item.get('caption'),
+                      item.get('main_mv_urls')[0].get('url'), item.get('time'), keyword, page)
+            result.append(v)
+    return result
+
 
 def get_sig(param, salt='382700b563f4'):
     param.pop('__NStokensig')

@@ -3,9 +3,11 @@
 
 import sys
 
-from util.httpClient import getVideoUrls
+from util.download import download
+from util.spider import getVideoUrls
 
 if __name__ == "__main__":
     keyword = sys.argv[1]
     page = sys.argv[2]
-    getVideoUrls(keyword, page)
+    data = getVideoUrls(keyword, page)
+    download(data, keyword, page)
