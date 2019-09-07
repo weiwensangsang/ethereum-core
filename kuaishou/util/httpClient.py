@@ -1,7 +1,7 @@
 import hashlib
 
 import requests
-
+import json
 from util.logUtil import now
 
 
@@ -42,9 +42,18 @@ def getVideoUrls(keyword, page):
     params.update({'sig': sig})
     print(now(), '构造签名成功，开始抓取数据...')
     r = requests.post("http://api.gifshow.com/rest/n/search", params=params)
-    result = r.text
+    print(r.text)
     print(now(), '数据抓取成功，开始解析视频链接...')
-
+    urls = []
+    captions = []
+    for item in r.json().get('feeds'):
+        if 'main_mv_urls' in item.keys():
+            url = item.get('main_mv_urls')[0].get('url')
+            caption = item.get('caption')
+            print(caption)
+            print(url + '\n')
+            captions.append(caption)
+            urls.append(url)
 
 def get_sig(param, salt='382700b563f4'):
     param.pop('__NStokensig')
