@@ -1,16 +1,18 @@
 import requests
 from moviepy.editor import *
 
-from util.util import time
 from util.util import file_time
+from util.util import time
 
 
 def download(data, keyword):
     print(time(), '视频链接解析成功，开始简介创建...')
     msg = ''
+    i = 1
     for item in data:
-        msg += item.info() + '\n'
-    root = "..\\kuaishou\\resource\\" + file_time() + keyword + "\\"
+        msg += str(i) + ". " + item.info() + '\n'
+        i += 1
+    root = "..\\kuaishou\\resource\\" + file_time() + "_" + keyword + "\\"
     if os.path.exists(root):
         for f in os.listdir(root):
             path_file2 = os.path.join(root, f)
@@ -18,7 +20,7 @@ def download(data, keyword):
                 os.remove(path_file2)
         os.removedirs(root)
     os.mkdir(root)
-    create__file(root + file_time() + keyword + ".txt", msg)
+    create__file(root + file_time() + "_" + keyword + ".txt", msg)
     print(time(), '简介创建成功，开始视频下载...')
     return download_video(data, root)
 
