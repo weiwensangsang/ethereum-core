@@ -23,7 +23,7 @@ if __name__ == "__main__":
         video_urls = []
         for index in range(int(page)):
             video_urls.extend(get_video_url(item[1], str(index)))
-        #videos = download(video_urls, item[1])
-        #concatenate(videos)
+        videos = download(video_urls, item[1])
+        concatenate(videos)
     #upload()
 
