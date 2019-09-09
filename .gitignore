@@ -1,4 +1,6 @@
 
 *.xml
 *.pyc
-.kuaishou/resource
+.kuaishou/.idea
+.kuaishou/dist
+.kuaishou/build
