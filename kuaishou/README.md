@@ -9,6 +9,8 @@ https://developers.google.com/apis-explorer/#p/youtube/v3/
 
 https://guozh.net/318/
 
+pip install google-auth-oauthlib
+
 https://developers.google.cn/youtube/v3/getting-started?hl=zh-tw
 
 apikey 只能用作读

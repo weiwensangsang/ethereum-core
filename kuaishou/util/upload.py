@@ -1,23 +1,42 @@
+# -*- coding: utf-8 -*-
+
+# Sample Python code for youtube.channels.list
+# See instructions for running these code samples locally:
+# https://developers.google.com/explorer-help/guides/code_samples#python
+
 import os
 
-import requests
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
+
+scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
 
-def test_connection():
-    proxies = {"http": "http://127.0.0.1:1080", "https": "http://127.0.0.1:1080", }
-    r = requests.get(
-        "https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=UCRr2dbgMHtMq9Z9lbG6GqWA&key=AIzaSyAEfdBhr2EY2z1I7newyVwqFksWjMDjdTY",
-        proxies=proxies)
-    print(r.content)
+def main():
+    # Disable OAuthlib's HTTPS verification when running locally.
+    # *DO NOT* leave this option enabled in production.
+    # os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
+    api_service_name = "youtube"
+    api_version = "v3"
+    client_secrets_file = "client_secret_627035101394-ggt7q1q7pm2pv47nit6hv30udhicup8k.apps.googleusercontent.com.json"
 
-def upload_video_to_youtube():
-    proxies = {"http": "http://127.0.0.1:1080", "https": "http://127.0.0.1:1080", }
-    r = requests.post(
-        "https://www.googleapis.com/upload/youtube/v3/videos?part=snippet&id=UCRr2dbgMHtMq9Z9lbG6GqWA&key=AIzaSyAEfdBhr2EY2z1I7newyVwqFksWjMDjdTY",
-        proxies=proxies)
-    print(r.content)
+    # Get credentials and create an API client
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        client_secrets_file, scopes)
+    credentials = flow.run_console()
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, credentials=credentials)
+
+    request = youtube.channels().list(
+        part="snippet,contentDetails,statistics",
+        id="UC_x5XG1OV2P6uZZ5FSM9Ttw"
+    )
+    response = request.execute()
+
+    print(response)
 
 
 if __name__ == "__main__":
-    test_connection()
+    main()
