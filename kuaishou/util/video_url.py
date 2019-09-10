@@ -52,7 +52,7 @@ def get_video_url(keyword, page):
             v = Video(item.get('photo_id'), item.get('caption'),
                       item.get('main_mv_urls')[0].get('url'), item.get('time'), keyword, page)
             result.append(v)
-    return result[0:3]
+    return result
 
 
 def get_sig(param, salt='382700b563f4'):
