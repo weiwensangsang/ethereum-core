@@ -29,7 +29,7 @@ if __name__ == "__main__":
         vm = download(video_urls, item[1])
         m = concatenate(vm)
         chinese.append(m)
-        english.append(Message('English', m.location, m.title, m.tag, m.decs))
+        english.append(Message('English', m.location, m.title, m.tag, m.desc))
     #Todo 开启鼠标操作流程
 
 

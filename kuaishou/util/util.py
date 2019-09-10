@@ -3,6 +3,8 @@ import hashlib
 import urllib
 import random
 import requests
+import time
+import pyautogui
 
 
 def translate(message):
@@ -25,7 +27,7 @@ def translate(message):
     return r.json().get('trans_result')[0].get('dst')
 
 
-def time():
+def now():
     return datetime.datetime.now().strftime('%H:%M:%S')
 
 
@@ -34,8 +36,22 @@ def file_time():
 
 
 class VM:
-    def __init__(self, data, title, tag, decs):
+    def __init__(self, data, title, tag, desc):
         self.tag = tag
-        self.decs = decs
+        self.decs = desc
         self.title = title
         self.data = data
+
+
+def pause(s):
+    print(now(), "暂停 %d 秒" % s)
+    time.sleep(s)
+
+
+def moveTo(x, y, s):
+    print(now(), "移动到 ( %d , %d ) 出, 移动时间 %d" % x, y, s)
+    pyautogui.moveTo(x=x, y=y, duration=s, tween=pyautogui.linear)
+
+
+if __name__ == "__main__":
+    moveTo(100, 400, 2)
