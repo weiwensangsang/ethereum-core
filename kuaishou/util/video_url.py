@@ -3,7 +3,7 @@ import hashlib
 import requests
 
 from util.util import time
-from util.video_concatenate import Video
+from util.video import Video
 
 
 def get_video_url(keyword, page):
@@ -52,7 +52,7 @@ def get_video_url(keyword, page):
             v = Video(item.get('photo_id'), item.get('caption'),
                       item.get('main_mv_urls')[0].get('url'), item.get('time'), keyword, page)
             result.append(v)
-    return result
+    return result[0:3]
 
 
 def get_sig(param, salt='382700b563f4'):

@@ -19,11 +19,20 @@ if __name__ == "__main__":
     random.shuffle(keywords)
     random.shuffle(pages)
     page = pages[0][1]
-    for item in keywords[0:3]:
+    messages = []
+    messagesEnglish = []
+    for item in keywords[0:1]:
         video_urls = []
         for index in range(int(page)):
             video_urls.extend(get_video_url(item[1], str(index)))
-        videos = download(video_urls, item[1])
-        concatenate(videos)
+        vm = download(video_urls, item[1])
+        m = concatenate(vm)
+        print(m.title)
+        print(m.type)
+        print(m.location)
+        print(m.tag)
+        print(m.desc)
+
+
     #upload()
 

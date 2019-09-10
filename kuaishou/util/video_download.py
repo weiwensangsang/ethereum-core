@@ -1,16 +1,19 @@
 import requests
 from moviepy.editor import *
 
-from util.util import file_time
+from util.util import file_time, VM
 from util.util import time
 
 
 def download(data, keyword):
     print(time(), '视频链接解析成功，开始简介创建...')
-    msg = ''
+    decs = ''
+    title = ''
     i = 1
     for item in data:
-        msg += str(i) + ". " + item.info() + '\n'
+        if i == 1:
+            title = item.info()
+        decs += str(i) + ". " + item.info() + '\n'
         i += 1
     root = "..\\kuaishou\\resource\\" + file_time() + "_" + keyword + "\\"
     if os.path.exists(root):
@@ -20,9 +23,9 @@ def download(data, keyword):
                 os.remove(path_file2)
         os.removedirs(root)
     os.mkdir(root)
-    create__file(root + file_time() + "_" + keyword + ".txt", msg)
+    #create__file(root + title + ".txt", decs)
     print(time(), '简介创建成功，开始视频下载...')
-    return download_video(data, root)
+    return download_video(data, root, title, keyword, decs)
 
 
 def create__file(file_path, msg):
@@ -33,7 +36,7 @@ def create__file(file_path, msg):
     f.close()
 
 
-def download_video(data, root):
+def download_video(data, root, title, keyword, decs):
     for item in data:
         name = item.caption[0:20]
         print(time(), "视频下载:%s" % name)
@@ -44,4 +47,4 @@ def download_video(data, root):
                 if chunk:
                     mp4.write(chunk)
     print(time(), "%d个视频下载成功" % len(data))
-    return data
+    return VM(data, title, keyword, decs)
