@@ -81,13 +81,21 @@ def typeEnter():
 def clickPic(data):
     if data == 'start':
         png ='png/1.png'
+    elif data == '2':
+        png = 'png/3.png'
 
-    print(now(), "寻找" + data + "按钮:" + png)
-    corn_locate = pyautogui.locateOnScreen(png)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
-    corn_center_x, corn_center_y = pyautogui.center(corn_locate)  # 找到按钮中心点
-    print(now(), "点击" + data + "按钮")
-    pyautogui.click(corn_center_x, corn_center_y)  # 点击按钮
+
+
+    try:
+        print(now(), "寻找" + data + "按钮:" + png)
+        corn_locate = pyautogui.locateOnScreen(png)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
+        corn_center_x, corn_center_y = pyautogui.center(corn_locate)  # 找到按钮中心点
+    except TypeError :
+        print(now(), "寻找" + data + "按钮失败")
+    else:
+        print(now(), "点击" + data + "按钮")
+        pyautogui.click(corn_center_x, corn_center_y)  # 点击按钮
 
 
 if __name__ == "__main__":
-    clickPic('start')
+    clickPic('2')
