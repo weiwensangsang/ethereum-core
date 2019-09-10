@@ -1,4 +1,4 @@
-import util
+from util.util import translate
 import os
 
 class Message:
@@ -6,9 +6,9 @@ class Message:
         self.type = type
         self.location = location.replace("..", os.path.dirname(os.path.abspath(os.path.realpath(__file__))))
         if self.type == 'English':
-            self.desc = util.translate(desc)
-            self.tag = util.translate(tag)
-            self.title = util.translate(title)
+            self.desc = translate(desc)
+            self.tag = translate(tag)
+            self.title = translate(title)
         elif self.type == 'Chinese':
             self.desc = desc
             self.tag = tag
