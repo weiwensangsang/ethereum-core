@@ -5,7 +5,7 @@ import random
 import requests
 import time
 import pyautogui
-
+import pyperclip
 
 def translate(message):
     appid = '20190910000333359'  # 你的appid
@@ -68,34 +68,50 @@ def click(n, m):
         n = n - 1
 
 
-def type(data, t):
+def typeChinese(data):
     print(now(), "键盘输入:" + data)
-    pyautogui.typewrite(data, t)  # 0.25表示每输完一个字符串延时0.25秒
+    pyperclip.copy(data)
+    pyautogui.keyDown('ctrl')
+    pyautogui.press('v')
+    pyautogui.keyUp('ctrl')
 
+def typeWords(data):
+    print(now(), "键盘输入汉字:" + data)
+    pyautogui.typewrite(data, 0.5)  # 0.25表示每输完一个字符串延时0.25秒
 
 def typeEnter():
     print(now(), "键盘输入:回车")
     pyautogui.typewrite(['enter'], 0.1)  # 0.25表示每输完一个字符串延时0.25秒
 
 
-def clickPic(data):
-    if data == 'start':
-        png ='png/1.png'
-    elif data == '2':
-        png = 'png/3.png'
-
-
+def clickButton(data, s):
+    data = 'button\\' + data + '.png'
 
     try:
-        print(now(), "寻找" + data + "按钮:" + png)
-        corn_locate = pyautogui.locateOnScreen(png)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
+        print(now(), "寻找" + data)
+        corn_locate = pyautogui.locateOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
         corn_center_x, corn_center_y = pyautogui.center(corn_locate)  # 找到按钮中心点
-    except TypeError :
-        print(now(), "寻找" + data + "按钮失败")
+    except TypeError:
+        print(now(), "寻找" + data + "失败")
     else:
-        print(now(), "点击" + data + "按钮")
+        print(now(), "点击" + data)
         pyautogui.click(corn_center_x, corn_center_y)  # 点击按钮
+        pause(s)
 
+
+def drag(data, len, duration):
+    data = 'button\\' + data + '.png'
+    try:
+        print(now(), "寻找" + data)
+        corn_locate = pyautogui.locateOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
+        corn_center_x, corn_center_y = pyautogui.center(corn_locate)  # 找到按钮中心点
+    except TypeError:
+        print(now(), "寻找" + data + "失败")
+    else:
+        print(now(), "拖拽" + data)
+        pyautogui.moveTo(corn_center_x, corn_center_y)  # 点击按钮
+        pyautogui.dragRel(0, 0 - len, duration=duration)
+    pause(5)
 
 if __name__ == "__main__":
-    clickPic('2')
+    clickButton('2', 1)

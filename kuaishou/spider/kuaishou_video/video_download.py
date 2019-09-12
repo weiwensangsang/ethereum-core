@@ -1,8 +1,8 @@
 import requests
 from moviepy.editor import *
 
-from util.util import file_time, VM
-from util.util import now
+from spider.util.util import file_time, VM
+from spider.util.util import now
 
 
 def download(data, keyword):

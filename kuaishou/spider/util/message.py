@@ -1,4 +1,4 @@
-from util.util import translate
+from spider.util.util import translate
 import os
 
 class Message:

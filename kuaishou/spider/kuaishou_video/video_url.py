@@ -2,8 +2,8 @@ import hashlib
 
 import requests
 
-from util.util import now
-from util.video import Video
+from spider.util.util import now
+from spider.kuaishou_video.video import Video
 
 
 def get_video_url(keyword, page):
