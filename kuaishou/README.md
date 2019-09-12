@@ -10,7 +10,7 @@
         
 
         
-        static function OnBeforeResponse(oSession: Session) {
+static function OnBeforeResponse(oSession: Session) {
         if (m_Hide304s && oSession.responseCode == 304) {
             oSession["ui-hide"] = "true";
         }
@@ -18,13 +18,16 @@
         
         if (oSession.fullUrl.Contains("aweme/v1/search/item")) {
             oSession.utilDecodeResponse();
+			var path = "C:\\Users\\bisaibang\\Desktop\\WeBattle\\kuaishou\\resource\\douyin\\"
             var fso;
 			var file;
-            var filename = oSession.fullUrl.Split('/')[3]+'.json';
-			MessageBox.Show(oSession.GetRequestBodyAsString())
+			var s = oSession.GetRequestBodyAsString().Split('&')
+			var name = decodeURI(s[0]) + '_' + s[1]
+			
+            var filename = path + name +'.json';
 
             fso = new ActiveXObject("Scripting.FileSystemObject");
-            file = fso.OpenTextFile("D:\\ae\\"+ filename, 2 ,true, 0);
+            file = fso.OpenTextFile(filename, 2 ,true, 0);
             var o = oSession.GetResponseBodyAsString();
 
             var rJSON = Fiddler.WebFormats.JSON.JsonDecode(o);
@@ -37,5 +40,4 @@
         }
             
     }
-            
     }
