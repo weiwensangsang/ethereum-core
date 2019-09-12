@@ -1,11 +1,13 @@
 import datetime
 import hashlib
-import urllib
 import random
-import requests
 import time
+import urllib
+
 import pyautogui
 import pyperclip
+import requests
+
 
 def translate(message):
     appid = '20190910000333359'  # 你的appid
@@ -75,9 +77,11 @@ def typeChinese(data):
     pyautogui.press('v')
     pyautogui.keyUp('ctrl')
 
+
 def typeWords(data):
     print(now(), "键盘输入汉字:" + data)
     pyautogui.typewrite(data, 0.5)  # 0.25表示每输完一个字符串延时0.25秒
+
 
 def typeEnter():
     print(now(), "键盘输入:回车")
@@ -85,33 +89,36 @@ def typeEnter():
 
 
 def clickButton(data, s):
-    data = 'button\\' + data + '.png'
+    data = 'resource\\button\\' + data + '.png'
 
     try:
         print(now(), "寻找" + data)
-        corn_locate = pyautogui.locateOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
-        corn_center_x, corn_center_y = pyautogui.center(corn_locate)  # 找到按钮中心点
+        corn_locate = pyautogui.locateCenterOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
     except TypeError:
         print(now(), "寻找" + data + "失败")
     else:
         print(now(), "点击" + data)
-        pyautogui.click(corn_center_x, corn_center_y)  # 点击按钮
+        pyautogui.click(corn_locate)  # 点击按钮
         pause(s)
 
 
 def drag(data, len, duration):
-    data = 'button\\' + data + '.png'
+    data = 'resource\\button\\' + data + '.png'
     try:
         print(now(), "寻找" + data)
-        corn_locate = pyautogui.locateOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
-        corn_center_x, corn_center_y = pyautogui.center(corn_locate)  # 找到按钮中心点
+        corn_locate = pyautogui.locateCenterOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
     except TypeError:
         print(now(), "寻找" + data + "失败")
     else:
         print(now(), "拖拽" + data)
-        pyautogui.moveTo(corn_center_x, corn_center_y)  # 点击按钮
+        pyautogui.moveTo(corn_locate)  # 点击按钮
         pyautogui.dragRel(0, 0 - len, duration=duration)
     pause(5)
+
+def dragCurrent():
+    print(now(), "拖拽" + str(len))
+    moveRel(0, 300, 1)
+    pyautogui.dragRel(0, -300, button='left')  # 绝对移动
 
 if __name__ == "__main__":
     clickButton('2', 1)

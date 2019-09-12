@@ -1,6 +1,6 @@
-from spider.kuaishou_video.video_concatenate import concatenate
-from spider.kuaishou_video.video_download import download
-from spider.kuaishou_video.video_url import get_video_url
+from spider.kuaishou.video_concatenate import concatenate
+from spider.kuaishou.download import download
+from spider.kuaishou.kuaishou_video_url import get_video_url
 
 
 def get_kuaishou(keywords, page):

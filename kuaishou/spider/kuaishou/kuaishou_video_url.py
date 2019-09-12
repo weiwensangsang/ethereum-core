@@ -3,7 +3,7 @@ import hashlib
 import requests
 
 from spider.util.util import now
-from spider.kuaishou_video.video import Video
+from spider.util.video import Video
 
 
 def get_video_url(keyword, page):
