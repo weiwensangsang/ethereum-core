@@ -8,10 +8,7 @@ rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 from moviepy.editor import *
 
-from spider.util.util import now
-
-
-
+from spider.util.util import now, get_sum_name, clean_workspace
 
 
 def concatenate(vm):
@@ -29,22 +26,3 @@ def concatenate(vm):
     print(now(), "工作区清理成功，开始生成上传数据...")
     return Message('Chinese', location, vm.title, vm.tag, vm.decs)
 
-
-def get_sum_name(name):
-    index = name.rfind('\\')
-    path = name[0: index]
-    file_name = path[path.rfind('\\'): len(path)]
-    return path + '\\' + file_name + '.mp4'
-
-
-def get_sum_path(name):
-    return name[0: name.rfind('\\')] + '\\'
-
-
-def clean_workspace(name):
-    for f in os.listdir(get_sum_path(name)):
-        if not f.startswith('20'):
-            file = os.path.join(get_sum_path(name), f)
-            if os.path.isfile(file):
-                os.remove(file)
-    print(now(), "工作区清理成功，本次视频处理完成。")

@@ -4,7 +4,7 @@ import configparser
 import random
 
 # from kuaishou.upload import upload
-from spider.douyin.start import get_douyin
+from spider.douyin.start import get_douyin, end_search
 from spider.util.message import Message
 
 
@@ -26,5 +26,6 @@ if __name__ == "__main__":
     douyin = get_douyin(keywords, page)
     # kdouyin_english = map(trans, douyin)
     # Todo 开启鼠标操作视频上传流程
-
+    for item in douyin:
+        print(item)
     # upload()

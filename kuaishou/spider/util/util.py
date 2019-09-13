@@ -7,6 +7,7 @@ import urllib
 import pyautogui
 import pyperclip
 import requests
+import os
 
 
 def translate(message):
@@ -27,6 +28,41 @@ def translate(message):
 
     r = requests.get('http://api.fanyi.baidu.com' + myurl)
     return r.json().get('trans_result')[0].get('dst')
+
+def get_sum_name(name):
+    index = name.rfind('\\')
+    path = name[0: index]
+    file_name = path[path.rfind('\\'): len(path)]
+    return path + '\\' + file_name + '.mp4'
+
+
+def get_sum_path(name):
+    return name[0: name.rfind('\\')] + '\\'
+
+
+def get_trans():
+    return str.maketrans("<>/\\|:\"*?\n", "          ")
+
+def clean_workspace(name):
+    for f in os.listdir(get_sum_path(name)):
+        if not f.startswith('20'):
+            file = os.path.join(get_sum_path(name), f)
+            if os.path.isfile(file):
+                os.remove(file)
+    print(now(), "工作区清理成功，本次视频处理完成。")
+
+def clean_douyin_json():
+    path = "resource\\douyin\\"
+    for d in os.listdir(path):
+        if not d.startswith('20'):
+            path_file = os.path.join(path, d)
+            for f in os.listdir(path_file):
+                path_file2 = os.path.join(path_file, f)
+                if os.path.isfile(path_file2):
+                    os.remove(path_file2)
+            os.removedirs(path_file)
+
+
 
 
 def now():
@@ -121,4 +157,4 @@ def dragCurrent():
     pyautogui.dragRel(0, -300, button='left')  # 绝对移动
 
 if __name__ == "__main__":
-    clickButton('2', 1)
+    clean_douyin_json()

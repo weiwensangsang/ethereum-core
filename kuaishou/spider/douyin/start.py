@@ -1,5 +1,6 @@
-from spider.douyin.douyin_video_url import get_video_url
+from spider.douyin.video_url import get_video_url
 from spider.douyin.download import download
+from spider.douyin.concatenate import concatenate
 from spider.util.util import clickButton, drag, click, pause, moveRel, typeChinese, \
     dragCurrent
 
@@ -9,19 +10,23 @@ def get_douyin(keywords, page):
     start_douyin_app()
 
     data = []
-    for item in keywords[0:1]:
+    for item in keywords[0:3]:
         app_search(item[1])
-        for index in range((int(page) + 1) * 1):
+        for index in range((int(page)) * 1):
             dragCurrent()
 
         titles, video_urls = get_video_url(item[1])
-        download(titles, video_urls, item[1], 'douyin')
-        #m = concatenate(vm)
+        root, paths, titles, keyword = download(titles, video_urls, item[1], 'douyin')
+        m = concatenate(root, paths, titles, keyword)
+        data.append(m)
+        end_search()
     return data
 
 
 def start_douyin_app():
-    clickButton('抓包', 1)
+    clickButton('Android\\开始定位', 1)
+    moveRel(300, 0, 1)
+    click(1, 1)
     moveRel(50, 0, 0.1)
     click(1, 30)
     drag('Android\\锁', 800, 2)
@@ -40,5 +45,9 @@ def start_douyin_app():
 def app_search(data):
     typeChinese(data)
     clickButton('Android\\搜索', 4)
+    clickButton('Android\\搜索2', 4)
     clickButton('Android\\视频', 4)
 
+
+def end_search():
+    clickButton('Android\\下一个', 4)

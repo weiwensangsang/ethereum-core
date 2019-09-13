@@ -1,6 +1,6 @@
-from spider.kuaishou.video_concatenate import concatenate
+from spider.kuaishou.concatenate import concatenate
 from spider.kuaishou.download import download
-from spider.kuaishou.kuaishou_video_url import get_video_url
+from spider.kuaishou.video_url import get_video_url
 
 
 def get_kuaishou(keywords, page):
@@ -10,6 +10,6 @@ def get_kuaishou(keywords, page):
         for index in range(int(page)):
             video_urls.extend(get_video_url(item[1], str(index)))
         vm = download(video_urls, item[1])
-        m = concatenate(vm)
-        data.append(m)
+        #m = concatenate(vm)
+        #data.append(m)
     return data
