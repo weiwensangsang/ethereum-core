@@ -15,15 +15,15 @@ def trans(m):
 
 
 if __name__ == "__main__":
-    # cf = configparser.ConfigParser()
-    # cf.read("resource\\keyword.conf", encoding='utf-8')
-    # keywords = cf.items("keyword")
-    # pages = cf.items("page")
-    # random.shuffle(keywords)
-    # random.shuffle(pages)
-    # page = pages[0][1]
-    #
-    # kuaishou = get_kuaishou(keywords, page)
+    cf = configparser.ConfigParser()
+    cf.read("resource\\keyword.conf", encoding='utf-8')
+    keywords = cf.items("keyword")
+    pages = cf.items("page")
+    random.shuffle(keywords)
+    random.shuffle(pages)
+    page = pages[0][1]
+
+    kuaishou = get_kuaishou(keywords, page)
     # kuaishou_add_english = map(trans, kuaishou)
     # douyin = get_douyin(keywords, page)
     # douyin_add_english = map(trans, douyin)
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     #     print(item.desc)
     #     print(item.type)
     # # Todo 开启视频上传流程
-    kuaishou = []
+
     douyin = []
     upload_to_bilibili(kuaishou, douyin)
     # upload_to_youtube(kuaishou_add_english, douyin_add_english)
