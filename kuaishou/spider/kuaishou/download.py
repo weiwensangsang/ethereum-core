@@ -13,7 +13,7 @@ def download(data, keyword, type):
     for item in data:
         if i == 1:
             title = item.info()
-        decs += str(i) + ". " + item.info() + '\n'
+        decs += item.info() + '\n'
         i += 1
     root = "..\\kuaishou\\resource\\" + type + '\\' + file_time() + "_" + keyword + "\\"
     if os.path.exists(root):
@@ -37,6 +37,7 @@ def create__file(file_path, msg):
 
 
 def download_video(data, root, title, keyword, decs):
+    data = data[0:2]
     for item in data:
         name = item.caption[0:20]
         print(now(), "视频下载:%s" % name)

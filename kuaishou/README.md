@@ -1,5 +1,7 @@
 android模拟器标签要在抓包软件右边，再右是chrome
 chrome设置启动时最大化
+flidder 模拟器 要主动关
+youtube bilibli 图标要决定定位
         
         b站名字格式 ‘关键字’合集 “大于10个字的第一句话”
         标签 tik tok 快手 关键字

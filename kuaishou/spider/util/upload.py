@@ -47,4 +47,4 @@ def upload_single_file_to_bilibili(message):
     typeChinese(decs)
     scroll(-700)
     moveRel(-550, 350, 2)
-    click(1, 1)
+    click(1, 120)
