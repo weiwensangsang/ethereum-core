@@ -123,6 +123,11 @@ def typeEnter():
     print(now(), "键盘输入:回车")
     pyautogui.typewrite(['enter'], 0.1)  # 0.25表示每输完一个字符串延时0.25秒
 
+def typeTab():
+    print(now(), "键盘输入:TAB")
+    pyautogui.typewrite(['tab'], 0.1)  # 0.25表示每输完一个字符串延时0.25秒
+
+
 
 def clickButton(data, s):
     data = 'resource\\button\\' + data + '.png'
@@ -156,5 +161,8 @@ def dragCurrent():
     moveRel(0, 300, 1)
     pyautogui.dragRel(0, -300, button='left')  # 绝对移动
 
+def scroll(len):
+    pyautogui.scroll(len)
+
 if __name__ == "__main__":
-    clean_douyin_json()
+    scroll(-100)

@@ -7,6 +7,7 @@ import random
 from spider.douyin.start import get_douyin, end_search
 from spider.kuaishou.start import get_kuaishou
 from spider.util.message import Message
+from spider.util.upload import upload_to_bilibili, upload_to_youtube
 
 
 def trans(m):
@@ -14,27 +15,29 @@ def trans(m):
 
 
 if __name__ == "__main__":
-    cf = configparser.ConfigParser()
-    cf.read("resource\\keyword.conf", encoding='utf-8')
-    keywords = cf.items("keyword")
-    pages = cf.items("page")
-    random.shuffle(keywords)
-    random.shuffle(pages)
-    page = pages[0][1]
+    # cf = configparser.ConfigParser()
+    # cf.read("resource\\keyword.conf", encoding='utf-8')
+    # keywords = cf.items("keyword")
+    # pages = cf.items("page")
+    # random.shuffle(keywords)
+    # random.shuffle(pages)
+    # page = pages[0][1]
+    #
+    # kuaishou = get_kuaishou(keywords, page)
+    # kuaishou_add_english = map(trans, kuaishou)
+    # douyin = get_douyin(keywords, page)
+    # douyin_add_english = map(trans, douyin)
 
-    kuaishou = get_kuaishou(keywords, page)
-    kuaishou_english = map(trans, kuaishou)
-    douyin = get_douyin(keywords, page)
-    douyin_english = map(trans, douyin)
-    # Todo 开启鼠标操作视频上传流程
-    for item in douyin_english:
-        print(item.title)
-        print(item.tag)
-        print(item.location)
-        print(item.desc)
-        print(item.type)
-
+    # for item in douyin_add_english:
+    #     print(item.title)
+    #     print(item.tag)
+    #     print(item.location)
+    #     print(item.desc)
+    #     print(item.type)
+    # # Todo 开启视频上传流程
+    kuaishou = []
+    douyin = []
     upload_to_bilibili(kuaishou, douyin)
-    upload_to_youtube(kuaishou_english, douyin_english)
+    # upload_to_youtube(kuaishou_add_english, douyin_add_english)
 
     # upload()
