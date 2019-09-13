@@ -5,6 +5,7 @@ import random
 
 # from kuaishou.upload import upload
 from spider.douyin.start import get_douyin, end_search
+from spider.kuaishou.start import get_kuaishou
 from spider.util.message import Message
 
 
@@ -21,11 +22,19 @@ if __name__ == "__main__":
     random.shuffle(pages)
     page = pages[0][1]
 
-    # kuaishou = get_kuaishou(keywords, page)
-    # kuaishou_english = map(trans, kuaishou)
+    kuaishou = get_kuaishou(keywords, page)
+    kuaishou_english = map(trans, kuaishou)
     douyin = get_douyin(keywords, page)
-    # kdouyin_english = map(trans, douyin)
+    douyin_english = map(trans, douyin)
     # Todo 开启鼠标操作视频上传流程
-    for item in douyin:
-        print(item)
+    for item in douyin_english:
+        print(item.title)
+        print(item.tag)
+        print(item.location)
+        print(item.desc)
+        print(item.type)
+
+    upload_to_bilibili(kuaishou, douyin)
+    upload_to_youtube(kuaishou_english, douyin_english)
+
     # upload()

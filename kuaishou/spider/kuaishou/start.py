@@ -9,7 +9,7 @@ def get_kuaishou(keywords, page):
         video_urls = []
         for index in range(int(page)):
             video_urls.extend(get_video_url(item[1], str(index)))
-        vm = download(video_urls, item[1])
-        #m = concatenate(vm)
-        #data.append(m)
+        vm = download(video_urls, item[1], 'kuaishou')
+        m = concatenate(vm)
+        data.append(m)
     return data
