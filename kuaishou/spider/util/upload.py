@@ -1,3 +1,5 @@
+import pyautogui
+
 from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeTab, typeEnter, scroll, \
     movePoint, middleClick, translate
 
@@ -17,8 +19,10 @@ def upload_to_bilibili(kuaishou, douyin):
 
 def upload_to_youtube(kuaishou, douyin):
     print(now(), '开始设置网络...')
-    set_good_network()
-    print(now(), '开始上传快手到youtube...')
+    if not set_good_network():
+        print(now(), '网络不稳定，结束上传到youtube')
+        return
+    print(now(), '网络设置成功，开始上传快手到youtube...')
     for m in kuaishou:
         lauch_chrome()
         upload_single_file_to_youtube(m, "快手")
@@ -90,9 +94,29 @@ def upload_single_file_to_youtube(message, type):
         typeEnter()
     clickButton('youtube\\发布', 2)
 
+
 def set_good_network():
-    return
+    movePoint('start')
+    moveRel(400, 0, 1)
+    click(1, 1)
+    lauch_chrome()
+    movePoint('page_start')
+    moveRel(150, 0, 1)
+    click(1, 20)
+    work = False
+    count = 1
+    while not work and count <= 5:
+        data = 'resource\\button\\youtube\\选取要上传的视频.png'
+        #data = '选取要上传的视频.png'
+
+        try:
+            print(now(), "尝试寻找" + data)
+            corn_locate = pyautogui.locateCenterOnScreen(data, grayscale=True)
+            return True
+        except TypeError:
+            print(now(), "寻找" + data + "失败")
+    return work
+
 
 if __name__ == "__main__":
-    lauch_chrome()
-    upload_single_file_to_youtube('', 'kuaishou', '0')
+    set_good_network()

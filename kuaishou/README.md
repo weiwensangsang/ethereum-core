@@ -1,6 +1,6 @@
-android模拟器标签要在抓包软件右边，再右是chrome
+flidder 夜神 chrome ss
 chrome设置启动时最大化
-flidder 模拟器 要主动关
+
 youtube bilibli 图标要决定定位
 
         
