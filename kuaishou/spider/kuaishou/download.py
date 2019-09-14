@@ -37,7 +37,6 @@ def create__file(file_path, msg):
 
 
 def download_video(data, root, title, keyword, decs):
-    data = data[0:2]
     for item in data:
         name = item.caption[0:20]
         print(now(), "视频下载:%s" % name)

@@ -1,4 +1,5 @@
-from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeWords, typeTab, typeEnter, scroll
+from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeWords, typeTab, typeEnter, scroll, \
+    movePoint
 
 
 def upload_to_bilibili(kuaishou, douyin):
@@ -19,27 +20,27 @@ def upload_to_youtube(kuaishou_english, douyin_english):
     return
 
 def lauch_chrome():
-    clickButton('Android\\开始定位', 1)
-    moveRel(400, 0, 1)
+    movePoint('start')
+    moveRel(350, 0, 1)
     click(1, 1)
 
 
 def upload_single_file_to_bilibili(message):
-    clickButton('bilibili\\bilibili', 2)
-    clickButton('bilibili\\投稿', 2)
+    movePoint('page_start')
+    click(1, 1)
     path = message.location
     title = message.title
     tag = message.tag
     decs = message.desc
-    clickButton('bilibili\\上传视频', 2)
-    click(1, 1)
+    movePoint('bilibili_upload_video')
+    click(2, 1)
     typeChinese(path)
     clickButton('bilibili\\确定', 2)
     clickButton('bilibili\\使用投稿模板', 2)
     clickButton('bilibili\\默认模板', 2)
     typeTab()
     typeTab()
-    typeChinese("快手:" + title)
+    typeChinese("快手: " + title)
     typeTab()
     typeChinese(tag)
     typeEnter()
@@ -47,4 +48,6 @@ def upload_single_file_to_bilibili(message):
     typeChinese(decs)
     scroll(-700)
     moveRel(-550, 350, 2)
-    click(1, 120)
+    click(1, 200)
+    movePoint('refresh_page')
+    click(1, 4)

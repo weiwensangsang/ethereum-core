@@ -1,5 +1,6 @@
 import datetime
 import hashlib
+import os
 import random
 import time
 import urllib
@@ -7,7 +8,6 @@ import urllib
 import pyautogui
 import pyperclip
 import requests
-import os
 
 
 def translate(message):
@@ -29,6 +29,7 @@ def translate(message):
     r = requests.get('http://api.fanyi.baidu.com' + myurl)
     return r.json().get('trans_result')[0].get('dst')
 
+
 def get_sum_name(name):
     index = name.rfind('\\')
     path = name[0: index]
@@ -43,6 +44,7 @@ def get_sum_path(name):
 def get_trans():
     return str.maketrans("<>/\\|:\"*?\n", "          ")
 
+
 def clean_workspace(name):
     for f in os.listdir(get_sum_path(name)):
         if not f.startswith('20'):
@@ -50,6 +52,7 @@ def clean_workspace(name):
             if os.path.isfile(file):
                 os.remove(file)
     print(now(), "工作区清理成功，本次视频处理完成。")
+
 
 def clean_douyin_json():
     path = "resource\\douyin\\"
@@ -61,8 +64,6 @@ def clean_douyin_json():
                 if os.path.isfile(path_file2):
                     os.remove(path_file2)
             os.removedirs(path_file)
-
-
 
 
 def now():
@@ -123,10 +124,10 @@ def typeEnter():
     print(now(), "键盘输入:回车")
     pyautogui.typewrite(['enter'], 0.1)  # 0.25表示每输完一个字符串延时0.25秒
 
+
 def typeTab():
     print(now(), "键盘输入:TAB")
     pyautogui.typewrite(['tab'], 0.1)  # 0.25表示每输完一个字符串延时0.25秒
-
 
 
 def clickButton(data, s):
@@ -134,7 +135,8 @@ def clickButton(data, s):
 
     try:
         print(now(), "寻找" + data)
-        corn_locate = pyautogui.locateCenterOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
+        corn_locate = pyautogui.locateCenterOnScreen(data,
+                                                     grayscale=True)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
     except TypeError:
         print(now(), "寻找" + data + "失败")
     else:
@@ -156,13 +158,34 @@ def drag(data, len, duration):
         pyautogui.dragRel(0, 0 - len, duration=duration)
     pause(5)
 
+
 def dragCurrent():
     print(now(), "拖拽" + str(len))
     moveRel(0, 300, 1)
     pyautogui.dragRel(0, -300, button='left')  # 绝对移动
 
+
 def scroll(len):
     pyautogui.scroll(len)
 
+
+def position():
+    pos = pyautogui.position()  # 获取当前鼠标的位置
+    posStr = "Position:" + str(pos.x).rjust(4) + ',' + str(pos.y).rjust(4)
+    print(posStr)
+
+
+def movePoint(name):
+    if name == 'start':
+        moveTo(200, 1050, 1)
+    elif name == 'page_start':
+        moveTo(165, 80, 1)
+    elif name == 'bilibili_upload_video':
+        moveTo(1060, 485, 1)
+    elif name == 'refresh_page':
+        moveTo(95, 50, 1)
+
 if __name__ == "__main__":
-    scroll(-100)
+    position()
+    movePoint('refresh_page')
+    click(4, 2)
