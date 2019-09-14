@@ -2,7 +2,7 @@ from spider.douyin.video_url import get_video_url
 from spider.douyin.download import download
 from spider.douyin.concatenate import concatenate
 from spider.util.util import clickButton, drag, click, pause, moveRel, typeChinese, \
-    dragCurrent
+    dragCurrent, movePoint
 
 
 def get_douyin(keywords, page):
@@ -10,9 +10,9 @@ def get_douyin(keywords, page):
     start_douyin_app()
 
     data = []
-    for item in keywords[0:3]:
+    for item in keywords[0:2]:
         app_search(item[1])
-        for index in range((int(page)) * 1):
+        for index in range((int(page)) * 1 - 1):
             dragCurrent()
 
         titles, video_urls = get_video_url(item[1])
@@ -24,8 +24,8 @@ def get_douyin(keywords, page):
 
 
 def start_douyin_app():
-    clickButton('Android\\开始定位', 1)
-    moveRel(300, 0, 1)
+    movePoint('start')
+    moveRel(250, 0, 1)
     click(1, 1)
     moveRel(50, 0, 0.1)
     click(1, 30)

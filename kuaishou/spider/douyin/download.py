@@ -29,12 +29,13 @@ def create__file(file_path, msg):
 
 
 def download_video(video_urls, root, keyword, titles):
-
+    #video_urls = video_urls[0:2]
     index = 0
     paths = []
     for item in video_urls:
         #print(titles[index])
         name = titles[index].split('记录美好生活')[1].split('%s 复制此链接')[0].translate(get_trans()).replace('#', '')
+        titles[index] = name
         print(now(), "视频下载:%s" % name)
         r = requests.get(item, stream=True)
         path = root + name + ".mp4";

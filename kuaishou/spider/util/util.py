@@ -50,7 +50,10 @@ def clean_workspace(name):
         if not f.startswith('20'):
             file = os.path.join(get_sum_path(name), f)
             if os.path.isfile(file):
-                os.remove(file)
+                try:
+                    os.remove(file)
+                except PermissionError:
+                    print(now(), "本文件无法删除，跳过。")
     print(now(), "工作区清理成功，本次视频处理完成。")
 
 
@@ -105,6 +108,8 @@ def click(n, m):
         pyautogui.click(button='left')
         pause(m)
         n = n - 1
+def middleClick():
+    pyautogui.middleClick()
 
 
 def typeChinese(data):

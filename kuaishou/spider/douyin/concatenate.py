@@ -8,7 +8,7 @@ rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 from moviepy.editor import *
 
-from spider.util.util import now, get_sum_name, clean_workspace, clean_douyin_json
+from spider.util.util import now, get_sum_name, clean_workspace, clean_douyin_json, get_trans
 
 
 def concatenate(root, paths, titles, keyword):
@@ -25,9 +25,7 @@ def concatenate(root, paths, titles, keyword):
     clean_douyin_json()
     print(now(), "工作区清理成功，开始生成上传数据...")
     decs = ''
-    i = 0
     for item in titles:
-        decs += str(i) + ". " + item + '\n'
-        i += 1
+        decs += item + '\n'
     return Message('Chinese', location, titles[0], keyword, decs)
 
