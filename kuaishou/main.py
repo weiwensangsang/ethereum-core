@@ -23,9 +23,9 @@ if __name__ == "__main__":
     random.shuffle(pages)
     page = pages[0][1]
 
-    #kuaishou = get_kuaishou(keywords, page)
+    kuaishou = get_kuaishou(keywords, page)
     # kuaishou_add_english = map(trans, kuaishou)
-    douyin = get_douyin(keywords, page)
+    #douyin = get_douyin(keywords, page)
     # douyin_add_english = map(trans, douyin)
 
     # for item in douyin_add_english:
@@ -36,8 +36,9 @@ if __name__ == "__main__":
     #     print(item.type)
     # # Todo 开启视频上传流程
 
-    kuaishou = []
-    upload_to_bilibili(kuaishou, douyin)
+    #kuaishou = []
+    douyin = []
+    #upload_to_bilibili(kuaishou, douyin)
     upload_to_youtube(kuaishou, douyin)
 
     # upload()

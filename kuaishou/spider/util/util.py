@@ -150,6 +150,20 @@ def clickButton(data, s):
         pause(s)
 
 
+def rightClickButton(data, s):
+    data = 'resource\\button\\' + data + '.png'
+
+    try:
+        print(now(), "寻找" + data)
+        corn_locate = pyautogui.locateCenterOnScreen(data,
+                                                     grayscale=True)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
+    except TypeError:
+        print(now(), "寻找" + data + "失败")
+    else:
+        print(now(), "右键点击" + data)
+        pyautogui.rightClick(corn_locate)  # 点击按钮
+        pause(s)
+
 def drag(data, len, duration):
     data = 'resource\\button\\' + data + '.png'
     try:
@@ -191,6 +205,5 @@ def movePoint(name):
         moveTo(95, 50, 1)
 
 if __name__ == "__main__":
-    position()
-    movePoint('refresh_page')
-    click(4, 2)
+    s = 'Good evening.Good evening.Good eveningGood evening.Good eveningGood evening.Good eveningGood evening.Good evening'
+    print(len(s))

@@ -1,7 +1,7 @@
 import pyautogui
 
 from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeTab, typeEnter, scroll, \
-    movePoint, middleClick, translate
+    movePoint, middleClick, translate, position, rightClickButton
 
 
 def upload_to_bilibili(kuaishou, douyin):
@@ -20,7 +20,7 @@ def upload_to_bilibili(kuaishou, douyin):
 def upload_to_youtube(kuaishou, douyin):
     print(now(), '开始设置网络...')
     if not set_good_network():
-        print(now(), '网络不稳定，结束上传到youtube')
+        print(now(), '网络不稳定，结束上传。')
         return
     print(now(), '网络设置成功，开始上传快手到youtube...')
     for m in kuaishou:
@@ -46,7 +46,7 @@ def upload_single_file_to_bilibili(message, type):
     path = message.location
     title = message.title
     tag = message.tag
-    decs = message.desc
+    desc = message.desc
     movePoint('bilibili_upload_video')
     click(2, 1)
     typeChinese(path)
@@ -60,10 +60,10 @@ def upload_single_file_to_bilibili(message, type):
     typeChinese(tag)
     typeEnter()
     typeTab()
-    typeChinese(decs)
+    typeChinese(desc)
     scroll(-700)
     moveRel(-550, 350, 2)
-    click(1, 1)
+    click(1, 20)
 
 
 def upload_single_file_to_youtube(message, type):
@@ -73,10 +73,12 @@ def upload_single_file_to_youtube(message, type):
     click(1, 5)
     path = message.location
     title = message.title + " " + translate(message.title)
+    if (len(title) > 90):
+        title = title[0:90]
     tags.append(message.tag)
     tags.append(translate(message.tag))
-    decs = message.decs
-    clickButton('youtube\\选取要上传的视频', 2)
+    desc = message.desc
+    clickButton('youtube\\上传', 2)
     typeChinese(path)
     clickButton('bilibili\\确定', 2)
     typeTab()
@@ -87,34 +89,41 @@ def upload_single_file_to_youtube(message, type):
     typeTab()
     typeChinese(type + ": " + title)
     typeTab()
-    typeChinese(decs)
+    typeChinese(desc)
     typeTab()
     for i in tags:
         typeChinese(i)
         typeEnter()
-    clickButton('youtube\\发布', 2)
+    clickButton('youtube\\发布', 20)
+    click(1, 1)
 
 
 def set_good_network():
-    movePoint('start')
-    moveRel(400, 0, 1)
-    click(1, 1)
-    lauch_chrome()
-    movePoint('page_start')
-    moveRel(150, 0, 1)
-    click(1, 20)
     work = False
     count = 1
-    while not work and count <= 5:
-        data = 'resource\\button\\youtube\\选取要上传的视频.png'
-        #data = '选取要上传的视频.png'
-
+    while not work and count <= 3:
+        if count == 1:
+            movePoint('start')
+            moveRel(400, 0, 1)
+            click(1, 1)
+        lauch_chrome()
+        movePoint('page_start')
+        moveRel(150, 0, 1)
+        click(1, 30)
+        data = 'resource\\button\\youtube\\上传.png'
         try:
             print(now(), "尝试寻找" + data)
-            corn_locate = pyautogui.locateCenterOnScreen(data, grayscale=True)
+            pyautogui.locateCenterOnScreen(data, grayscale=True)
             return True
         except TypeError:
-            print(now(), "寻找" + data + "失败")
+            print(now(), "寻找" + data + "失败, 切换服务器。")
+            rightClickButton('youtube\\ss', 1)
+            moveRel(0, -200, 1)
+            moveRel(-400, 0, 1)
+            moveRel(400, 0, 1)
+            moveRel(0, -20 * count, 1)
+            click(1, 1)
+            count = count + 1
     return work
 
 
