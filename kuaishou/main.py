@@ -8,6 +8,7 @@ from spider.douyin.start import get_douyin, end_search
 from spider.kuaishou.start import get_kuaishou
 from spider.util.message import Message
 from spider.util.upload import upload_to_bilibili, upload_to_youtube, lauch_chrome, upload_single_file_to_youtube
+from spider.util.util import clean_final_workspace
 
 
 def trans(m):
@@ -25,7 +26,7 @@ if __name__ == "__main__":
 
     kuaishou = get_kuaishou(keywords, page)
     # kuaishou_add_english = map(trans, kuaishou)
-    #douyin = get_douyin(keywords, page)
+    douyin = get_douyin(keywords, page)
     # douyin_add_english = map(trans, douyin)
 
     # for item in douyin_add_english:
@@ -37,8 +38,11 @@ if __name__ == "__main__":
     # # Todo 开启视频上传流程
 
     #kuaishou = []
-    douyin = []
-    #upload_to_bilibili(kuaishou, douyin)
+    #douyin = []
+    upload_to_bilibili(kuaishou, douyin)
     upload_to_youtube(kuaishou, douyin)
+
+    clean_final_workspace('douyin')
+    clean_final_workspace('kuaishou')
 
     # upload()

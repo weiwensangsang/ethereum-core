@@ -1,7 +1,9 @@
+import os
+
 import pyautogui
 
 from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeTab, typeEnter, scroll, \
-    movePoint, middleClick, translate, position, rightClickButton
+    movePoint, middleClick, translate, rightClickButton, rightClick
 
 
 def upload_to_bilibili(kuaishou, douyin):
@@ -14,6 +16,7 @@ def upload_to_bilibili(kuaishou, douyin):
     for m in douyin:
         lauch_chrome()
         upload_single_file_to_bilibili(m, "抖音")
+
     return
 
 
@@ -72,12 +75,12 @@ def upload_single_file_to_youtube(message, type):
     moveRel(150, 0, 1)
     click(1, 5)
     path = message.location
-    title = message.title + " " + translate(message.title)
+    title = translate(message.title) + " " + message.title
     if (len(title) > 90):
         title = title[0:90]
     tags.append(message.tag)
     tags.append(translate(message.tag))
-    desc = message.desc
+    desc = translate(message.desc) + " " + message.desc
     clickButton('youtube\\上传', 2)
     typeChinese(path)
     clickButton('bilibili\\确定', 2)
@@ -117,14 +120,18 @@ def set_good_network():
             return True
         except TypeError:
             print(now(), "寻找" + data + "失败, 切换服务器。")
-            rightClickButton('youtube\\ss', 1)
+            movePoint('ss')
+            rightClick()
             moveRel(0, -200, 1)
             moveRel(-400, 0, 1)
-            moveRel(400, 0, 1)
+            moveRel(-400, 0, 1)
             moveRel(0, -20 * count, 1)
             click(1, 1)
             count = count + 1
     return work
+
+
+
 
 
 if __name__ == "__main__":

@@ -111,6 +111,9 @@ def click(n, m):
 def middleClick():
     pyautogui.middleClick()
 
+def rightClick():
+    print(now(), "光标点击右键")
+    pyautogui.rightClick()
 
 def typeChinese(data):
     print(now(), "键盘输入:" + data)
@@ -203,7 +206,19 @@ def movePoint(name):
         moveTo(1060, 485, 1)
     elif name == 'refresh_page':
         moveTo(95, 50, 1)
+    elif name == 'ss':
+        moveTo(1616, 1058, 1)
+
+def clean_final_workspace(dir):
+    print(now(), "清理工作区" + dir)
+    path = "resource\\" + dir + "\\"
+    for d in os.listdir(path):
+        path_file = os.path.join(path, d)
+        for f in os.listdir(path_file):
+            path_file2 = os.path.join(path_file, f)
+            if os.path.isfile(path_file2):
+                os.remove(path_file2)
+        os.removedirs(path_file)
 
 if __name__ == "__main__":
-    s = 'Good evening.Good evening.Good eveningGood evening.Good eveningGood evening.Good eveningGood evening.Good evening'
-    print(len(s))
+    position()

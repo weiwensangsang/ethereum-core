@@ -2,7 +2,7 @@ flidder 夜神 chrome ss
 chrome设置启动时最大化
 
 youtube bilibli 图标要决定定位
-
+ss 图标再最右边
         
         b站名字格式 ‘关键字’合集 “大于10个字的第一句话”
         标签 tik tok 快手 关键字

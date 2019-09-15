@@ -29,7 +29,7 @@ def create__file(file_path, msg):
 
 
 def download_video(video_urls, root, keyword, titles):
-    video_urls = video_urls[0:2]
+    #video_urls = video_urls[0:2]
     index = 0
     paths = []
     for item in video_urls:
