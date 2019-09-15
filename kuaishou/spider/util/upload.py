@@ -90,7 +90,7 @@ def upload_single_file_to_youtube(message, type):
     typeTab()
     typeTab()
     typeTab()
-    typeChinese(title)
+    typeChinese(type + ": " + title)
     typeTab()
     typeChinese(desc)
     typeTab()
