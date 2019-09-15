@@ -8,6 +8,7 @@ import urllib
 import pyautogui
 import pyperclip
 import requests
+import shutil
 
 
 def translate(message):
@@ -108,12 +109,16 @@ def click(n, m):
         pyautogui.click(button='left')
         pause(m)
         n = n - 1
+
+
 def middleClick():
     pyautogui.middleClick()
+
 
 def rightClick():
     print(now(), "光标点击右键")
     pyautogui.rightClick()
+
 
 def typeChinese(data):
     print(now(), "键盘输入:" + data)
@@ -167,17 +172,9 @@ def rightClickButton(data, s):
         pyautogui.rightClick(corn_locate)  # 点击按钮
         pause(s)
 
-def drag(data, len, duration):
-    data = 'resource\\button\\' + data + '.png'
-    try:
-        print(now(), "寻找" + data)
-        corn_locate = pyautogui.locateCenterOnScreen(data)  # 找到按钮所在坐标，分别含义是按钮左上角x坐标，左上角y坐标，x方向大小，y方向大小 (5, 560, 54, 54)
-    except TypeError:
-        print(now(), "寻找" + data + "失败")
-    else:
-        print(now(), "拖拽" + data)
-        pyautogui.moveTo(corn_locate)  # 点击按钮
-        pyautogui.dragRel(0, 0 - len, duration=duration)
+
+def drag(len, duration):
+    pyautogui.dragRel(0, 0 - len, duration=duration)
     pause(5)
 
 
@@ -208,17 +205,16 @@ def movePoint(name):
         moveTo(95, 50, 1)
     elif name == 'ss':
         moveTo(1616, 1058, 1)
+    elif name == 'lock':
+        moveTo(1121, 882, 1)
+
 
 def clean_final_workspace(dir):
     print(now(), "清理工作区" + dir)
     path = "resource\\" + dir + "\\"
-    for d in os.listdir(path):
-        path_file = os.path.join(path, d)
-        for f in os.listdir(path_file):
-            path_file2 = os.path.join(path_file, f)
-            if os.path.isfile(path_file2):
-                os.remove(path_file2)
-        os.removedirs(path_file)
+    shutil.rmtree(path)
+
 
 if __name__ == "__main__":
+    pause(5)
     position()

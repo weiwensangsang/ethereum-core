@@ -1,6 +1,7 @@
 # import os
 # import time
 import configparser
+import os
 import random
 
 # from kuaishou.upload import upload
@@ -16,6 +17,13 @@ def trans(m):
 
 
 if __name__ == "__main__":
+    root_douyin = "resource\\douyin"
+    root_kuaishou = "resource\\kuaishou"
+    if not os.path.exists("resource\\douyin"):
+        os.mkdir(root_douyin)
+    if not os.path.exists("resource\\kuaishou"):
+        os.mkdir(root_kuaishou)
+
     cf = configparser.ConfigParser()
     cf.read("resource\\keyword.conf", encoding='utf-8')
     keywords = cf.items("keyword")

@@ -3,7 +3,7 @@ import os
 import pyautogui
 
 from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeTab, typeEnter, scroll, \
-    movePoint, middleClick, translate, rightClickButton, rightClick
+    movePoint, middleClick, translate, rightClickButton, rightClick, pause
 
 
 def upload_to_bilibili(kuaishou, douyin):
@@ -16,7 +16,7 @@ def upload_to_bilibili(kuaishou, douyin):
     for m in douyin:
         lauch_chrome()
         upload_single_file_to_bilibili(m, "抖音")
-
+    pause(200)
     return
 
 
@@ -28,11 +28,11 @@ def upload_to_youtube(kuaishou, douyin):
     print(now(), '网络设置成功，开始上传快手到youtube...')
     for m in kuaishou:
         lauch_chrome()
-        upload_single_file_to_youtube(m, "快手")
+        upload_single_file_to_youtube(m, "Kuaishou")
     print(now(), '开始上传抖音到youtube...')
     for m in douyin:
         lauch_chrome()
-        upload_single_file_to_youtube(m, "抖音")
+        upload_single_file_to_youtube(m, "Tik Tok")
 
     return
 
@@ -76,11 +76,11 @@ def upload_single_file_to_youtube(message, type):
     click(1, 5)
     path = message.location
     title = translate(message.title) + " " + message.title
-    if (len(title) > 90):
+    if len(title) > 90:
         title = title[0:90]
     tags.append(message.tag)
     tags.append(translate(message.tag))
-    desc = translate(message.desc) + " " + message.desc
+    desc = message.desc
     clickButton('youtube\\上传', 2)
     typeChinese(path)
     clickButton('bilibili\\确定', 2)
@@ -90,7 +90,7 @@ def upload_single_file_to_youtube(message, type):
     typeTab()
     typeTab()
     typeTab()
-    typeChinese(type + ": " + title)
+    typeChinese(title)
     typeTab()
     typeChinese(desc)
     typeTab()
