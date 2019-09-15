@@ -28,11 +28,11 @@ def upload_to_youtube(kuaishou, douyin):
     print(now(), '网络设置成功，开始上传快手到youtube...')
     for m in kuaishou:
         lauch_chrome()
-        upload_single_file_to_youtube(m, "Kuaishou")
+        upload_single_file_to_youtube(m, "Kuaishou 快手")
     print(now(), '开始上传抖音到youtube...')
     for m in douyin:
         lauch_chrome()
-        upload_single_file_to_youtube(m, "Tik Tok")
+        upload_single_file_to_youtube(m, "Tik Tok 抖音")
 
     return
 
