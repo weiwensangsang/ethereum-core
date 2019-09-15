@@ -9,7 +9,7 @@ from spider.douyin.start import get_douyin, end_search
 from spider.kuaishou.start import get_kuaishou
 from spider.util.message import Message
 from spider.util.upload import upload_to_bilibili, upload_to_youtube, lauch_chrome, upload_single_file_to_youtube
-from spider.util.util import clean_final_workspace
+from spider.util.util import clean_start_workspace
 
 
 def trans(m):
@@ -19,10 +19,15 @@ def trans(m):
 if __name__ == "__main__":
     root_douyin = "resource\\douyin"
     root_kuaishou = "resource\\kuaishou"
-    if not os.path.exists("resource\\douyin"):
-        os.mkdir(root_douyin)
-    if not os.path.exists("resource\\kuaishou"):
-        os.mkdir(root_kuaishou)
+
+    if os.path.exists("resource\\douyin"):
+        clean_start_workspace('douyin')
+    if os.path.exists("resource\\kuaishou"):
+        clean_start_workspace('kuaishou')
+
+    os.mkdir(root_douyin)
+    os.mkdir(root_kuaishou)
+
 
     cf = configparser.ConfigParser()
     cf.read("resource\\keyword.conf", encoding='utf-8')
@@ -50,7 +55,6 @@ if __name__ == "__main__":
     upload_to_bilibili(kuaishou, douyin)
     upload_to_youtube(kuaishou, douyin)
 
-    clean_final_workspace('douyin')
-    clean_final_workspace('kuaishou')
+
 
     # upload()

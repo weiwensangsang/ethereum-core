@@ -209,7 +209,7 @@ def movePoint(name):
         moveTo(1121, 882, 1)
 
 
-def clean_final_workspace(dir):
+def clean_start_workspace(dir):
     print(now(), "清理工作区" + dir)
     path = "resource\\" + dir + "\\"
     shutil.rmtree(path)
