@@ -3,18 +3,17 @@ import os
 import pyautogui
 
 from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeTab, typeEnter, scroll, \
-    movePoint, middleClick, translate, rightClickButton, rightClick, pause
+    movePoint, middleClick, translate, rightClickButton, rightClick, pause, position
 
 
 def upload_to_bilibili(kuaishou, douyin):
     print(now(), '开始上传快手到bilibili...')
+    lauch_bilibili_upload()
     for m in kuaishou:
-        lauch_chrome()
         upload_single_file_to_bilibili(m, "快手")
 
     print(now(), '开始上传抖音到bilibili...')
     for m in douyin:
-        lauch_chrome()
         upload_single_file_to_bilibili(m, "抖音")
     pause(200)
     return
@@ -42,31 +41,46 @@ def lauch_chrome():
     moveRel(350, 0, 1)
     middleClick()
 
+def lauch_bilibili_upload():
+    movePoint('start')
+    moveRel(450, 0, 1)
+    click(1, 1)
+
 
 def upload_single_file_to_bilibili(message, type):
-    movePoint('page_start')
-    click(1, 1)
     path = message.location
     title = message.title
     tag = message.tag
     desc = message.desc
-    movePoint('bilibili_upload_video')
-    click(2, 1)
+
+    movePoint('bilibili_upload')
+    click(1, 1)
     typeChinese(path)
     clickButton('bilibili\\确定', 2)
-    clickButton('bilibili\\使用投稿模板', 2)
-    clickButton('bilibili\\默认模板', 2)
-    typeTab()
-    typeTab()
+    moveRel(190, -190, 1)
+    click(1, 1)
+    moveRel(-90, 100, 1)
+    click(1, 1)
+
+    moveRel(-650, 30, 1)
+    click(1, 1)
+    scroll(-700)
+    moveRel(0, -280, 1)
+    click(1, 1)
     typeChinese(type + ": " + title)
     typeTab()
     typeChinese(tag)
     typeEnter()
-    typeTab()
+    moveRel(0, 380, 1)
+    click(1, 1)
     typeChinese(desc)
-    scroll(-700)
-    moveRel(-550, 350, 2)
-    click(1, 20)
+    typeTab()
+    typeTab()
+    typeTab()
+    typeEnter()
+    pause(5)
+    typeEnter()
+
 
 
 def upload_single_file_to_youtube(message, type):
@@ -135,4 +149,5 @@ def set_good_network():
 
 
 if __name__ == "__main__":
-    set_good_network()
+    pause(4)
+    position()
