@@ -78,9 +78,8 @@ def upload_single_file_to_bilibili(message, type):
     typeTab()
     typeTab()
     typeEnter()
-    pause(5)
+    pause(1)
     typeEnter()
-
 
 
 def upload_single_file_to_youtube(message, type):
