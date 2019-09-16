@@ -75,7 +75,7 @@ def upload_single_file_to_youtube(message, type):
     moveRel(150, 0, 1)
     click(1, 5)
     path = message.location
-    title = translate(message.title) + " " + message.title
+    title = " " + message.title
     if len(title) > 90:
         title = title[0:90]
     tags.append(message.tag)
