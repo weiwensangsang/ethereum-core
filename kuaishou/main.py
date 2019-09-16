@@ -50,8 +50,6 @@ if __name__ == "__main__":
     #     print(item.type)
     # # Todo 开启视频上传流程
 
-    #kuaishou = []
-    #douyin = []
     upload_to_bilibili(kuaishou, douyin)
     upload_to_youtube(kuaishou, douyin)
 
