@@ -3,6 +3,7 @@ import time
 import json
 import requests
 from selenium import webdriver
+from selenium.common.exceptions import InvalidArgumentException
 
 from spider.util.util import now
 
@@ -25,8 +26,12 @@ def get_video_url(keyword):
             driver.get(s)  # 加载网页
             data = driver.page_source  # 获取网页文本
             url = data[(data.find('playAddr') + 11): data.find('cover')].split('\"')[0]
-            driver.get(url)
-            urls.append(driver.current_url)
+            try:
+                driver.get(url)
+                urls.append(driver.current_url)
+            except InvalidArgumentException:
+                continue
+
     driver.quit()
     return titles, urls
 

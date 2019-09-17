@@ -15,7 +15,6 @@ def upload_to_bilibili(kuaishou, douyin):
     print(now(), '开始上传抖音到bilibili...')
     for m in douyin:
         upload_single_file_to_bilibili(m, "【抖音】")
-    pause(200)
     return
 
 
@@ -49,7 +48,7 @@ def lauch_bilibili_upload():
 
 def upload_single_file_to_bilibili(message, type):
     path = message.location
-    title = type + "【" + message.tag + "】" + message.title + " (" + date + ")"
+    title = type + "【" + message.tag + "】" + message.title + " (" + date() + ")"
     tag = message.tag
     desc = message.desc
 
@@ -88,7 +87,7 @@ def upload_single_file_to_youtube(message, type):
     moveRel(150, 0, 1)
     click(1, 5)
     path = message.location
-    title = type + "【" + message.tag + "】"+ message.title + " (" + date + ")"
+    title = type + "【" + message.tag + "】"+ message.title + " (" + date() + ")"
     if len(title) > 90:
         title = title[0:90]
     tags.append(message.tag)
