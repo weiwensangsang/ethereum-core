@@ -1,3 +1,5 @@
+from _ssl import SSLError
+
 import requests
 from moviepy.editor import *
 
@@ -15,7 +17,7 @@ def download(titles, video_urls, keyword, type):
                 os.remove(path_file2)
         os.removedirs(root)
     os.mkdir(root)
-    #create__file(root + title + ".txt", decs)
+    # create__file(root + title + ".txt", decs)
     print(now(), '简介创建成功，开始视频下载...')
     return download_video(video_urls, root, keyword, titles)
 
@@ -33,17 +35,20 @@ def download_video(video_urls, root, keyword, titles):
     index = 0
     paths = []
     for item in video_urls:
-        #print(titles[index])
+        # print(titles[index])
         name = titles[index].split('记录美好生活')[1].split('%s 复制此链接')[0].translate(get_trans()).replace('#', '')
         titles[index] = name
         print(now(), "视频下载:%s" % name)
-        r = requests.get(item, stream=True)
-        path = root + name + ".mp4";
-        paths.append(path)
-        with open(path, "wb") as mp4:
-            for chunk in r.iter_content(chunk_size=1024 * 1024):
-                if chunk:
-                    mp4.write(chunk)
-        index = index + 1
+        try:
+            r = requests.get(item, stream=True)
+            path = root + name + ".mp4";
+            paths.append(path)
+            with open(path, "wb") as mp4:
+                for chunk in r.iter_content(chunk_size=1024 * 1024):
+                    if chunk:
+                        mp4.write(chunk)
+            index = index + 1
+        except Exception:
+            continue
     print(now(), "%d个视频下载成功" % len(video_urls))
     return root, paths, titles, keyword
