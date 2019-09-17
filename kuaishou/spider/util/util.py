@@ -74,7 +74,7 @@ def now():
     return datetime.datetime.now().strftime('%H:%M:%S')
 
 
-def file_time():
+def date():
     return datetime.datetime.now().strftime('%Y-%m-%d')
 
 

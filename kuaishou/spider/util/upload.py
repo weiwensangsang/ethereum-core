@@ -3,18 +3,18 @@ import os
 import pyautogui
 
 from spider.util.util import now, clickButton, moveRel, click, typeChinese, typeTab, typeEnter, scroll, \
-    movePoint, middleClick, translate, rightClickButton, rightClick, pause, position
+    movePoint, middleClick, translate, rightClickButton, rightClick, pause, position, date
 
 
 def upload_to_bilibili(kuaishou, douyin):
     print(now(), '开始上传快手到bilibili...')
     lauch_bilibili_upload()
     for m in kuaishou:
-        upload_single_file_to_bilibili(m, "快手")
+        upload_single_file_to_bilibili(m, "【快手】")
 
     print(now(), '开始上传抖音到bilibili...')
     for m in douyin:
-        upload_single_file_to_bilibili(m, "抖音")
+        upload_single_file_to_bilibili(m, "【抖音】")
     pause(200)
     return
 
@@ -27,11 +27,11 @@ def upload_to_youtube(kuaishou, douyin):
     print(now(), '网络设置成功，开始上传快手到youtube...')
     for m in kuaishou:
         lauch_chrome()
-        upload_single_file_to_youtube(m, "Kuaishou 快手")
+        upload_single_file_to_youtube(m, "【快手】")
     print(now(), '开始上传抖音到youtube...')
     for m in douyin:
         lauch_chrome()
-        upload_single_file_to_youtube(m, "Tik Tok 抖音")
+        upload_single_file_to_youtube(m, "【抖音】")
 
     return
 
@@ -49,7 +49,7 @@ def lauch_bilibili_upload():
 
 def upload_single_file_to_bilibili(message, type):
     path = message.location
-    title = message.title
+    title = type + "【" + message.tag + "】" + message.title + " (" + date + ")"
     tag = message.tag
     desc = message.desc
 
@@ -67,7 +67,7 @@ def upload_single_file_to_bilibili(message, type):
     scroll(-700)
     moveRel(0, -280, 1)
     click(1, 1)
-    typeChinese(type + ": " + title)
+    typeChinese(title)
     typeTab()
     typeChinese(tag)
     typeEnter()
@@ -82,16 +82,18 @@ def upload_single_file_to_bilibili(message, type):
 
 
 def upload_single_file_to_youtube(message, type):
-    tags = ['抖音', '快手', 'Tik Tok', 'kuaishou']
+    base = ['抖音', '快手', 'Tik Tok', 'kuaishou']
+    tags= []
     movePoint('page_start')
     moveRel(150, 0, 1)
     click(1, 5)
     path = message.location
-    title = " " + message.title
+    title = type + "【" + message.tag + "】"+ message.title + " (" + date + ")"
     if len(title) > 90:
         title = title[0:90]
     tags.append(message.tag)
     tags.append(translate(message.tag))
+    tags.extend(base)
     desc = message.desc
     clickButton('youtube\\上传', 2)
     typeChinese(path)
@@ -102,7 +104,7 @@ def upload_single_file_to_youtube(message, type):
     typeTab()
     typeTab()
     typeTab()
-    typeChinese(type + ": " + title)
+    typeChinese(title)
     typeTab()
     typeChinese(desc)
     typeTab()

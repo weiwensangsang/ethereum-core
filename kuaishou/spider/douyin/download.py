@@ -1,13 +1,13 @@
 import requests
 from moviepy.editor import *
 
-from spider.util.util import file_time, VM, get_trans
+from spider.util.util import date, VM, get_trans
 from spider.util.util import now
 
 
 def download(titles, video_urls, keyword, type):
     print(now(), '视频链接解析成功，开始简介创建...')
-    root = "..\\kuaishou\\resource\\" + type + '\\' + file_time() + "_" + keyword + "\\"
+    root = "..\\kuaishou\\resource\\" + type + '\\' + date() + "_" + keyword + "\\"
     if os.path.exists(root):
         for f in os.listdir(root):
             path_file2 = os.path.join(root, f)

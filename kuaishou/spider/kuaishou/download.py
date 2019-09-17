@@ -1,7 +1,7 @@
 import requests
 from moviepy.editor import *
 
-from spider.util.util import file_time, VM
+from spider.util.util import date, VM
 from spider.util.util import now
 
 
@@ -15,7 +15,7 @@ def download(data, keyword, type):
             title = item.info()
         decs += item.info() + '\n'
         i += 1
-    root = "..\\kuaishou\\resource\\" + type + '\\' + file_time() + "_" + keyword + "\\"
+    root = "..\\kuaishou\\resource\\" + type + '\\' + date() + "_" + keyword + "\\"
     if os.path.exists(root):
         for f in os.listdir(root):
             path_file2 = os.path.join(root, f)
