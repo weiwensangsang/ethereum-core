@@ -1,4 +1,0 @@
-<!--miniprogram/pages/develop.wxml-->
-<view class="page-body">
-  <text>{{name}}</text>
-</view>
