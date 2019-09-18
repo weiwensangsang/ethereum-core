@@ -35,7 +35,7 @@ def start_douyin_app():
     click(3, 1)
     clickButton('Android\\是', 1)
     clickButton('Android\\抖音', 1)
-    pause(10)
+    pause(100)
     clickButton('Android\\查找', 1)
     moveRel(0, 60, 0.2)
     click(1, 4)
