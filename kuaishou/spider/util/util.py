@@ -208,7 +208,7 @@ def movePoint(name):
     elif name == 'lock':
         moveTo(1115, 882, 1)
     elif name == 'bilibili_upload':
-        moveTo(1136, 88, 1)
+        moveTo(700, 215, 1)
 
 def clean_start_workspace(dir):
     print(now(), "清理工作区" + dir)
