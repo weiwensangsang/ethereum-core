@@ -31,6 +31,7 @@ def start_douyin_app():
     click(1, 30)
     movePoint('lock')
     drag(800, 2)
+    pause(5)
     clickButton('Android\\1', 1)
     click(3, 1)
     clickButton('Android\\是', 1)
