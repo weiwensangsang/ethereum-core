@@ -30,11 +30,11 @@ def create__file(file_path, msg):
     f.close()
 
 
-def download_video(video_urls, root, keyword, titles):
-    #video_urls = video_urls[0:2]
+def download_video(data, root, keyword, titles):
+    #data = data[0:2]
     index = 0
     paths = []
-    for item in video_urls:
+    for item in data:
         # print(titles[index])
         name = titles[index].split('记录美好生活')[1].split('%s 复制此链接')[0].translate(get_trans()).replace('#', '')
         titles[index] = name
@@ -50,5 +50,5 @@ def download_video(video_urls, root, keyword, titles):
             index = index + 1
         except Exception:
             continue
-    print(now(), "%d个视频下载成功" % len(video_urls))
+    print(now(), "%d个视频下载成功" % len(data))
     return root, paths, titles, keyword
