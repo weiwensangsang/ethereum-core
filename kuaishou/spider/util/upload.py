@@ -139,7 +139,7 @@ def set_good_network():
             moveRel(-100, 0, 1)
             moveRel(200, 0, 1)
             moveRel(-600, 0, 1)
-            moveRel(0, -30 * count, 1)
+            moveRel(0, 40 * count, 1)
             click(1, 1)
             count = count + 1
     return work
