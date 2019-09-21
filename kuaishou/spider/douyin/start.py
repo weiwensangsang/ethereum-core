@@ -11,15 +11,18 @@ def get_douyin(keywords, page):
 
     data = []
     for item in keywords[0:2]:
-        app_search(item[1])
-        for index in range((int(page)) * 1 - 1):
-            dragCurrent()
+        try:
+            app_search(item[1])
+            for index in range((int(page)) * 1 - 1):
+                dragCurrent()
 
-        titles, video_urls = get_video_url(item[1])
-        root, paths, titles, keyword = download(titles, video_urls, item[1], 'douyin')
-        m = concatenate(root, paths, titles, keyword)
-        data.append(m)
-        end_search()
+            titles, video_urls = get_video_url(item[1])
+            root, paths, titles, keyword = download(titles, video_urls, item[1], 'douyin')
+            m = concatenate(root, paths, titles, keyword)
+            data.append(m)
+            end_search()
+        except Exception:
+            continue
     return data
 
 
