@@ -110,17 +110,6 @@ def upload_single_file_to_youtube(message, type):
     for i in tags:
         typeChinese(i)
         typeEnter()
-    typeTab()
-    typeTab()
-    typeTab()
-    typeTab()
-    typeTab()
-    typeTab()
-    typeTab()
-    typeTab()
-    typeEnter()
-
-
     clickButton('youtube\\发布', 20)
     click(1, 1)
 
