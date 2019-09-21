@@ -136,8 +136,9 @@ def set_good_network():
             movePoint('ss')
             rightClick()
             moveRel(0, -200, 1)
-            moveRel(-400, 0, 1)
-            moveRel(-400, 0, 1)
+            moveRel(-100, 0, 1)
+            moveRel(200, 0, 1)
+            moveRel(-600, 0, 1)
             moveRel(0, -20 * count, 1)
             click(1, 1)
             count = count + 1
@@ -148,5 +149,11 @@ def set_good_network():
 
 
 if __name__ == "__main__":
-    pause(4)
-    position()
+    movePoint('ss')
+    rightClick()
+    moveRel(0, -200, 1)
+    moveRel(-100, 0, 1)
+    moveRel(200, 0, 1)
+    moveRel(-600, 0, 1)
+    moveRel(0, -20 * 1, 1)
+    click(1, 1)
