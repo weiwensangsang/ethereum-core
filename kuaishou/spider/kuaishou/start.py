@@ -5,7 +5,7 @@ from spider.kuaishou.video_url import get_video_url
 
 def get_kuaishou(keywords, page):
     data = []
-    for item in keywords[0:2]:
+    for item in keywords[0:4]:
         video_urls = []
         for index in range(int(page)):
             try:

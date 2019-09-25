@@ -10,7 +10,7 @@ def get_douyin(keywords, page):
     start_douyin_app()
 
     data = []
-    for item in keywords[0:2]:
+    for item in keywords[0:4]:
         try:
             app_search(item[1])
             for index in range((int(page)) * 1 - 1):
