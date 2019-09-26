@@ -43,7 +43,7 @@ def lauch_chrome():
 def lauch_bilibili_upload():
     movePoint('start')
     moveRel(450, 0, 1)
-    click(1, 1)
+    click(1, 30)
 
 
 def upload_single_file_to_bilibili(message, type):
@@ -85,7 +85,7 @@ def upload_single_file_to_youtube(message, type):
     tags= []
     movePoint('page_start')
     moveRel(150, 0, 1)
-    click(1, 5)
+    click(1, 30)
     path = message.location
     title = type + "【" + message.tag + "】"+ message.title + " (" + date() + ")"
     if len(title) > 90:

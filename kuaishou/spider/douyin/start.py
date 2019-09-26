@@ -5,19 +5,19 @@ from spider.util.util import clickButton, drag, click, pause, moveRel, typeChine
     dragCurrent, movePoint
 
 
-def get_douyin(keywords, page):
+def get_douyin(keywords, page, concatenate_number):
     # 开启模拟器和抓包工具
     start_douyin_app()
 
     data = []
-    for item in keywords[0:4]:
+    for item in keywords:
         try:
             app_search(item[1])
-            for index in range((int(page)) * 1 - 1):
+            for index in range(page * 1 - 1):
                 dragCurrent()
 
             titles, video_urls = get_video_url(item[1])
-            root, paths, titles, keyword = download(titles, video_urls, item[1], 'douyin')
+            root, paths, titles, keyword = download(titles, video_urls, item[1], 'douyin', concatenate_number)
             m = concatenate(root, paths, titles, keyword)
             data.append(m)
             end_search()

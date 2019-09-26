@@ -7,7 +7,7 @@ from spider.util.util import date, VM, get_trans
 from spider.util.util import now
 
 
-def download(titles, video_urls, keyword, type):
+def download(titles, video_urls, keyword, type, concatenate_number):
     print(now(), '视频链接解析成功，开始简介创建...')
     root = "..\\kuaishou\\resource\\" + type + '\\' + date() + "_" + keyword + "\\"
     if os.path.exists(root):
@@ -19,7 +19,7 @@ def download(titles, video_urls, keyword, type):
     os.mkdir(root)
     # create__file(root + title + ".txt", decs)
     print(now(), '简介创建成功，开始视频下载...')
-    return download_video(video_urls, root, keyword, titles)
+    return download_video(video_urls, root, keyword, titles, concatenate_number)
 
 
 def create__file(file_path, msg):
@@ -30,8 +30,9 @@ def create__file(file_path, msg):
     f.close()
 
 
-def download_video(data, root, keyword, titles):
-    #data = data[0:2]
+def download_video(data, root, keyword, titles, concatenate_number):
+    if concatenate_number < len(data):
+        data = data[0:concatenate_number]
     index = 0
     paths = []
     for item in data:

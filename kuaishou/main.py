@@ -2,21 +2,16 @@
 # import time
 import configparser
 import os
-import random
 
 # from kuaishou.upload import upload
-from spider.douyin.start import get_douyin, end_search
+from spider.douyin.start import get_douyin
 from spider.kuaishou.start import get_kuaishou
 from spider.util.message import Message
-from spider.util.upload import upload_to_bilibili, upload_to_youtube, lauch_chrome, upload_single_file_to_youtube
+from spider.util.upload import upload_to_bilibili, upload_to_youtube
 from spider.util.util import clean_start_workspace
 
 
-def trans(m):
-    return Message('English', m.location, m.title, m.tag, m.desc)
-
-
-if __name__ == "__main__":
+def get_data():
     root_douyin = "resource\\douyin"
     root_kuaishou = "resource\\kuaishou"
 
@@ -28,31 +23,35 @@ if __name__ == "__main__":
     os.mkdir(root_douyin)
     os.mkdir(root_kuaishou)
 
-
     cf = configparser.ConfigParser()
     cf.read("resource\\keyword.conf", encoding='utf-8')
-    keywords = cf.items("keyword")
-    pages = cf.items("page")
-    random.shuffle(keywords)
-    random.shuffle(pages)
-    page = pages[0][1]
+    basic_keyword = cf.items("keyword")
+    config = cf.items("config")
+    page = int(config[0][1])
+    keyword_number = int(config[1][1])
+    concatenate_number = int(config[2][1])
+    index = int(cf.items("current")[0][1])
+    # print(index)
+    # print(len(basic_keyword))
+    if (index + keyword_number) > len(basic_keyword):
+        index = 0
+    keywords = cf.items("keyword")[index: index + keyword_number]
+    index = index + keyword_number
+    cf.set("current", "index", str(index))
 
-    kuaishou = get_kuaishou(keywords, page)
-    # kuaishou_add_english = map(trans, kuaishou)
-    douyin = get_douyin(keywords, page)
-    # douyin_add_english = map(trans, douyin)
+    with open("resource\\keyword.conf", "w+", encoding='utf-8') as f:
+        cf.write(f)
+    return keywords, page, concatenate_number
 
-    # for item in douyin_add_english:
-    #     print(item.title)
-    #     print(item.tag)
-    #     print(item.location)
-    #     print(item.desc)
-    #     print(item.type)
-    # # Todo 开启视频上传流程
 
+if __name__ == "__main__":
+    keywords, page, concatenate_number = get_data()
+    #print(keywords, page, concatenate_number)
+
+    kuaishou = get_kuaishou(keywords, page, concatenate_number)
+    douyin = get_douyin(keywords, page, concatenate_number)
+
+    #douyin = []
     upload_to_bilibili(kuaishou, douyin)
     upload_to_youtube(kuaishou, douyin)
 
-
-
-    # upload()
