@@ -15,6 +15,7 @@ def upload_to_bilibili(kuaishou, douyin):
     print(now(), '开始上传抖音到bilibili...')
     for m in douyin:
         upload_single_file_to_bilibili(m, "【抖音】")
+    pause(300)
     return
 
 
