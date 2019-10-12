@@ -1,1 +1,1 @@
-# WeBattle
+# How Ethereum Works
