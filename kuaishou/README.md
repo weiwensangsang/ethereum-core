@@ -1,5 +1,6 @@
 flidder 夜神 chrome ss b站
 chrome设置启动时最大化
+模拟器按照搜狗输入法
 
 
         

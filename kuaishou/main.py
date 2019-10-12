@@ -49,9 +49,9 @@ if __name__ == "__main__":
     #print(keywords, page, concatenate_number)
 
     kuaishou = get_kuaishou(keywords, page, concatenate_number)
-    douyin = get_douyin(keywords, page, concatenate_number)
+    douyin = get_douyin(keywords, page, concatenate_number, 2)
 
-    #douyin = []
+
     upload_to_bilibili(kuaishou, douyin)
     upload_to_youtube(kuaishou, douyin)
 

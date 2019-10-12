@@ -209,6 +209,8 @@ def movePoint(name):
         moveTo(1115, 882, 1)
     elif name == 'bilibili_upload':
         moveTo(700, 215, 1)
+    elif name == 'douyin_search':
+        moveTo(1163, 962, 1)
 
 def clean_start_workspace(dir):
     print(now(), "清理工作区" + dir)
