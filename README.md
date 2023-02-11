@@ -5,5 +5,5 @@ This project will give a detailed introduction to the technical history, working
 
 ## Tech Map
 
+0. [Why We Want a New Blockchain?](./ethereum/00.why-we-want-a-new-blockchain.md)
 1. [Why Use GoLang to Build a Blockchain?](./ethereum/01.why-use-golang-to-build-a-blockchain.md)
-
