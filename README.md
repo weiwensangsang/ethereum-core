@@ -7,7 +7,7 @@ This project will give a detailed introduction to the technical history, working
 
 00. [Why We Want a New Blockchain?](./ethereum/00.why-we-want-a-new-blockchain.md)
 01. [Ethereum Should Do Something New](./ethereum/01.ethereum-should-do-something-new.md)
-02. [Ethereum Code Structure](./ethereum/01.ethereum-code-structure.md)
+02. [Ethereum Code Structure](./ethereum/02.ethereum-code-structure.md)
 01. [Ethereum Should Do Something New](./ethereum/01.ethereum-should-do-something-new.md)
 01. [Ethereum Should Do Something New](./ethereum/01.ethereum-should-do-something-new.md)
 
