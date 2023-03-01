@@ -117,6 +117,7 @@ This project will give a detailed introduction to the technical history, working
 31. What are the recommended methods for testing smart contracts?
 32. Do you know the specific methods for automated and manual testing of smart contracts?
 33. What are the mandatory prerequisites for deploying smart contracts?
+34. [How to attack a smart contract?](problems/how-to-attack-smart-contract.md)
 
 
 

@@ -79,9 +79,40 @@ type Block struct {
    ReceivedAt   time.Time
    ReceivedFrom interface{}
 }
+
+// Header represents a block header in the Ethereum blockchain.
+type Header struct {
+	ParentHash  common.Hash    `json:"parentHash"       gencodec:"required"`
+	UncleHash   common.Hash    `json:"sha3Uncles"       gencodec:"required"`
+	Coinbase    common.Address `json:"miner"`           //The address that accepts block rewards. Miners fill in their own addresses in this field when producing blocks.
+	Root        common.Hash    `json:"stateRoot"        gencodec:"required"` // Hash of state, after all transactions done
+	TxHash      common.Hash    `json:"transactionsRoot" gencodec:"required"` // hash of Block.transactions
+	ReceiptHash common.Hash    `json:"receiptsRoot"     gencodec:"required"` // Receipt Hash
+	Bloom       Bloom          `json:"logsBloom"        gencodec:"required"` // bloom filter to find the log
+	Difficulty  *big.Int       `json:"difficulty"       gencodec:"required"`
+	Number      *big.Int       `json:"number"           gencodec:"required"`
+	GasLimit    uint64         `json:"gasLimit"         gencodec:"required"` // Upper for gas
+	GasUsed     uint64         `json:"gasUsed"          gencodec:"required"` // used gas
+	Time        uint64         `json:"timestamp"        gencodec:"required"` // Timestamp
+	Extra       []byte         `json:"extraData"        gencodec:"required"` // extra Data, anything could be possible
+	MixDigest   common.Hash    `json:"mixHash"`   // hashimoto
+	Nonce       BlockNonce     `json:"nonce"`    //For PoW Miner
+
+	// BaseFee was added by EIP-1559 and is ignored in legacy headers.
+	BaseFee *big.Int `json:"baseFeePerGas" rlp:"optional"`
+
+	// WithdrawalsHash was added by EIP-4895 and is ignored in legacy headers.
+	WithdrawalsHash *common.Hash `json:"withdrawalsRoot" rlp:"optional"`
+
+	/*
+		TODO (MariusVanDerWijden) Add this field once needed
+		// Random was added during the merge and contains the BeaconState randomness
+		Random common.Hash `json:"random" rlp:"optional"`
+	*/
+}
 ```
 
-
+http://yangzhe.me/2019/03/24/ethereum-blockchain/
 
 Fixme
 
