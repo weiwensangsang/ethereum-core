@@ -3,31 +3,28 @@ This project will give a detailed introduction to the technical history, working
 
 
 
-#### 
-
 ### Ethereum: new blcokchain
 
-0. [Why We Want a New Blockchain?](./ethereum/00.why-we-want-a-new-blockchain.md)
-1. [Ethereum Should Do Something New](./ethereum/01.ethereum-should-do-something-new.md)
-2. [Ethereum Code Structure](./ethereum/02.ethereum-code-structure.md)
-3. [Ethereum Should Do Something New](./ethereum/01.ethereum-should-do-something-new.md)
-4. [Ethereum Should Do Something New](./ethereum/01.ethereum-should-do-something-new.md)
-5. [Why Use GoLang to Build a Blockchain?](./ethereum/02.why-use-golang-to-build-a-blockchain.md)
-6. EIP-1559
-7. 以太坊的平均区块间隔时间是多少？
-8. 以太坊的平均区块大小是多少？
-9. 以太坊中的节点是什么？用什么方法可以连接到以太坊节点？
-10. 与以太坊网络交互都哪些方法？
-11. Name some Types of Ethereum Networks?
-12. What is an Ethereum Client?
-13. What is the fundamental tenet of the blockchain?
-14. How does a blockchain recognize a Block?
-15. In a Blockchain database, what various kinds of records can you find?
-16. Is it possible to make changes to the data after it has been written in a block?
-17. Are there any prerequisites for using blockchain technology in an organization?
-18. 以太坊主链已经很强大了，为什么还要使用以太坊私有链？
-19. 如何查看一笔交易或一个区块的详细信息？
-20. 如何查看私有链中一笔交易或一个区块的详细信息？
+0. [Why We Want a New Blockchain?](./ethereum/why-we-want-a-new-blockchain.md)
+1. [Ethereum Should Do Something New](./ethereum/ethereum-should-do-something-new.md)
+2. [Ethereum Code Structure](./ethereum/ethereum-code-structure.md)
+3. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
+4. [Ethereum Network](./ethereum/ethereum-network.md)
+5. EIP-1559
+6. 以太坊的平均区块间隔时间是多少？
+7. 以太坊的平均区块大小是多少？
+8. 以太坊中的节点是什么？用什么方法可以连接到以太坊节点？
+9. 与以太坊网络交互都哪些方法？
+10. Name some Types of Ethereum Networks?
+11. What is an Ethereum Client?
+12. What is the fundamental tenet of the blockchain?
+13. How does a blockchain recognize a Block?
+14. In a Blockchain database, what various kinds of records can you find?
+15. Is it possible to make changes to the data after it has been written in a block?
+16. Are there any prerequisites for using blockchain technology in an organization?
+17. 以太坊主链已经很强大了，为什么还要使用以太坊私有链？
+18. 如何查看一笔交易或一个区块的详细信息？
+19. 如何查看私有链中一笔交易或一个区块的详细信息？
 
 
 
@@ -193,5 +190,3 @@ This project will give a detailed introduction to the technical history, working
 4. 在Remix中，你可以连接哪些节点？
 5. How is Vyper a suitable alternative to Solidity for smart contract programming?
 6. Are Yul and Yul+ reliable for smart contract programming?
-
-#### 
