@@ -9,13 +9,11 @@ This project will give a detailed introduction to the technical history, working
 
 1. [Ethereum Should Do Something New](./ethereum/ethereum-should-do-something-new.md)
 
-2. [Ethereum Code Structure](./ethereum/ethereum-code-structure.md)
+2. [Ethereum Block and Network](./ethereum/ethereum-block-and-network.md)
 
 3. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
 
-4. [Ethereum Block and Network](./ethereum/ethereum-block-and-network.md)
-
-5. EIP-1559
+4. EIP-1559
 
    
 
