@@ -6,25 +6,18 @@ This project will give a detailed introduction to the technical history, working
 ### Ethereum: new blcokchain
 
 0. [Why We Want a New Blockchain?](./ethereum/why-we-want-a-new-blockchain.md)
+
 1. [Ethereum Should Do Something New](./ethereum/ethereum-should-do-something-new.md)
+
 2. [Ethereum Code Structure](./ethereum/ethereum-code-structure.md)
+
 3. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
-4. [Ethereum Network](./ethereum/ethereum-network.md)
+
+4. [Ethereum Block and Network](./ethereum/ethereum-block-and-network.md)
+
 5. EIP-1559
-6. 以太坊的平均区块间隔时间是多少？
-7. 以太坊的平均区块大小是多少？
-8. 以太坊中的节点是什么？用什么方法可以连接到以太坊节点？
-9. 与以太坊网络交互都哪些方法？
-10. Name some Types of Ethereum Networks?
-11. What is an Ethereum Client?
-12. What is the fundamental tenet of the blockchain?
-13. How does a blockchain recognize a Block?
-14. In a Blockchain database, what various kinds of records can you find?
-15. Is it possible to make changes to the data after it has been written in a block?
-16. Are there any prerequisites for using blockchain technology in an organization?
-17. 以太坊主链已经很强大了，为什么还要使用以太坊私有链？
-18. 如何查看一笔交易或一个区块的详细信息？
-19. 如何查看私有链中一笔交易或一个区块的详细信息？
+
+   
 
 
 
