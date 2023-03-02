@@ -112,6 +112,181 @@ type Header struct {
 }
 ```
 
+More important fields about Block,
+
+- Total Difficulty(Td)
+
+  - ```go
+    // TotalDifficultyAt calculates the total difficulty of the chain
+    // at the given block height.
+    func (c *Chain) TotalDifficultyAt(height int) *big.Int {
+       sum := new(big.Int)
+       if height >= c.Len() {
+          return sum
+       }
+       for _, block := range c.blocks[:height+1] {
+          sum.Add(sum, block.Difficulty())
+       }
+       return sum
+    }
+    ```
+
+- receipts
+
+- txlookupentries
+
+  - It is used to query which block the transaction belongs to through the transaction hash.
+
+- state
+
+  - all accounts info.
+
+
+
+### Chain and sidechains
+
+The **chain** is the recognized chain, and subsequent newly generated blocks use the last block of the **chain** as the parent block. 
+
+**Sidechains** are unacknowledged chains that may continue to grow, or stop there. If it continues to grow, its Td value may exceed the **chain** and become the **chain**. At this time, the original **chain** becomes a **sidechain** instead.
+
+Ideally, all blocks are added one by one on the **chain**. The reality is that the blockchain project is a distributed project, and the nodes did not trust each other before. Suppose nodes A and B generate a **block** with the same height, and they respectively tell other nodes about this news. Then some nodes add A's block to the **chain**, and some nodes add B's block to the **chain**. This situation creates a **fork**. 
+
+If there is only one **chain** and nodes do not recognize other branches, then this **fork** will continue forever. This is obviously not acceptable.
+
+Therefore, in Ethereum, the **chain** and **sidechains** exist in the database at the same time. Every time a new **block** is added, it is re-judging whether the branch where the newly added block is located has become the **chain**. If it becomes the **chain**, it needs to be adjusted, and the branch where the newly added block is located becomes the **chain**, and the original **chain** is canceled at the same time.
+
+
+
+This is the code how Blockchain decide to reorg.
+
+```go
+// writeBlockWithState writes block, metadata and corresponding state data to the
+// database.
+func (bc *BlockChain) writeBlockWithState(block *types.Block, receipts []*types.Receipt, state *state.StateDB) error {
+   // Calculate the total difficulty of the block
+   ptd := bc.GetTd(block.ParentHash(), block.NumberU64()-1)
+   if ptd == nil {
+      return consensus.ErrUnknownAncestor
+   }
+   // Make sure no inconsistent state is leaked during insertion
+   externTd := new(big.Int).Add(block.Difficulty(), ptd)
+
+   // Irrelevant of the canonical status, write the block itself to the database.
+   //
+   // Note all the components of block(td, hash->number map, header, body, receipts)
+   // should be written atomically. BlockBatch is used for containing all components.
+   blockBatch := bc.db.NewBatch()
+   rawdb.WriteTd(blockBatch, block.Hash(), block.NumberU64(), externTd)
+   rawdb.WriteBlock(blockBatch, block)
+   rawdb.WriteReceipts(blockBatch, block.Hash(), block.NumberU64(), receipts)
+   rawdb.WritePreimages(blockBatch, state.Preimages())
+   if err := blockBatch.Write(); err != nil {
+      log.Crit("Failed to write block into disk", "err", err)
+   }
+   // Commit all cached state changes into underlying memory database.
+   root, err := state.Commit(bc.chainConfig.IsEIP158(block.Number()))
+   if err != nil {
+      return err
+   }
+   // If we're running an archive node, always flush
+   if bc.cacheConfig.TrieDirtyDisabled {
+      return bc.triedb.Commit(root, false)
+   }
+   // Full but not archive node, do proper garbage collection
+   bc.triedb.Reference(root, common.Hash{}) // metadata reference to keep trie alive
+   bc.triegc.Push(root, -int64(block.NumberU64()))
+
+   current := block.NumberU64()
+   // Flush limits are not considered for the first TriesInMemory blocks.
+   if current <= TriesInMemory {
+      return nil
+   }
+   // If we exceeded our memory allowance, flush matured singleton nodes to disk
+   var (
+      nodes, imgs = bc.triedb.Size()
+      limit       = common.StorageSize(bc.cacheConfig.TrieDirtyLimit) * 1024 * 1024
+   )
+   if nodes > limit || imgs > 4*1024*1024 {
+      bc.triedb.Cap(limit - ethdb.IdealBatchSize)
+   }
+   // Find the next state trie we need to commit
+   chosen := current - TriesInMemory
+   flushInterval := time.Duration(atomic.LoadInt64(&bc.flushInterval))
+   // If we exceeded time allowance, flush an entire trie to disk
+   if bc.gcproc > flushInterval {
+      // If the header is missing (canonical chain behind), we're reorging a low
+      // diff sidechain. Suspend committing until this operation is completed.
+      header := bc.GetHeaderByNumber(chosen)
+      if header == nil {
+         log.Warn("Reorg in progress, trie commit postponed", "number", chosen)
+      } else {
+         // If we're exceeding limits but haven't reached a large enough memory gap,
+         // warn the user that the system is becoming unstable.
+         if chosen < bc.lastWrite+TriesInMemory && bc.gcproc >= 2*flushInterval {
+            log.Info("State in memory for too long, committing", "time", bc.gcproc, "allowance", flushInterval, "optimum", float64(chosen-bc.lastWrite)/TriesInMemory)
+         }
+         // Flush an entire trie and restart the counters
+         bc.triedb.Commit(header.Root, true)
+         bc.lastWrite = chosen
+         bc.gcproc = 0
+      }
+   }
+   // Garbage collect anything below our required write retention
+   for !bc.triegc.Empty() {
+      root, number := bc.triegc.Pop()
+      if uint64(-number) > chosen {
+         bc.triegc.Push(root, number)
+         break
+      }
+      bc.triedb.Dereference(root)
+   }
+   return nil
+}
+```
+
+
+
+This is the Blockchain how to reorg.
+
+```go
+// reorg takes two blocks, an old chain and a new chain and will reconstruct the
+// blocks and inserts them to be part of the new canonical chain and accumulates
+// potential missing transactions and post an event about them.
+// Note the new head block won't be processed here, callers need to handle it
+// externally.
+func (bc *BlockChain) reorg(oldBlock, newBlock *types.Block) error {
+   var (
+      newChain    types.Blocks
+      oldChain    types.Blocks
+      commonBlock *types.Block
+
+      deletedTxs []common.Hash
+      addedTxs   []common.Hash
+   )
+   // Reduce the longer chain to the same number as the shorter one
+   // Find the common ancestor commonBlock of the two branches of oldBlock and newBlock, Record all blocks on the path to the common ancestor in newChain and oldChain respectively. At the same time, put all transactions on the branch of oldBlock into deletedTxs.
+   if oldBlock.NumberU64() > newBlock.NumberU64() {
+     ...
+   }
+}
+```
+
+
+
+The method of writing a block to the main chain is actually very simple, that is, to create a record from the block height to the block hash in the database. When we only use the block height to get a block, what we get is the block on the main chain; at the same time, the main chain will have a mark that records the hash of the latest block on the main chain.
+
+
+
+### pruned block
+
+In October 2017, the data of Ethereum had reached more than 300G, and it would soon exceed 1T. Such a large amount of data is unacceptable for an ordinary user.
+
+The Ethereum team solved this problem by pruning block data. To be precise, what is pruned is actually state data, because the final reason for the rapid growth of Ethereum data is not the increase in the number of blocks, but the growth of state data. So why does the amount of state data grow so fast? This starts with how the state is implemented.
+
+
+
+
+
 http://yangzhe.me/2019/03/24/ethereum-blockchain/
 
 Fixme
