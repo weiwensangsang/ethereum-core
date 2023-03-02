@@ -7,17 +7,17 @@ This project will give a detailed introduction to the technical history, working
 
 0. [Why We Want a New Blockchain?](./ethereum/why-we-want-a-new-blockchain.md)
 
-1. [Ethereum Should Do Something New](./ethereum/ethereum-should-do-something-new.md)
+1. [Ethereum Trie](./ethereum/ethereum-trie.md)
 
-2. [Ethereum Trie](./ethereum/ethereum-trie.md)
+2. [Ethereum Account and State](./ethereum/ethereum-account-state.md)
 
-3. [Ethereum Account and State](./ethereum/ethereum-account-state.md)
+3. [Ethereum Block and Network](./ethereum/ethereum-block-and-network.md)
 
-4. [Ethereum Block and Network](./ethereum/ethereum-block-and-network.md)
+4. [Mining](./ethereum/mining.md)
 
-5. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
+5. [EIP-1559](./ethereum/eip-1559.md)
 
-6. EIP-1559
+6. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
 
    
 
