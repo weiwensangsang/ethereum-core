@@ -285,13 +285,35 @@ The Ethereum team solved this problem by pruning block data. To be precise, what
 
 
 
+Is it necessary for an Ethereum node to store all historical data of the state? In most cases it is not needed. For those data that are not needed, we can not store them. In case we need to use it one day, we can spend some time to recalculate the data because the complete block information is saved.
+
+The method provided by Ethereum is to prune the nodes of the trie tree. In the implementation of trie, "reference counting" will be performed on the nodes existing in memory, that is, each node has a number that records the number of times it is referenced. When the number of references becomes 0, the node memory will be released. will not be written to the database.
 
 
-http://yangzhe.me/2019/03/24/ethereum-blockchain/
 
-Fixme
+### 3 Synchronization Modes
 
+full、fast、light.
 
+##### full mode
+
+As the name suggests, "full mode" synchronizes all block data. In full mode, the synchronization module calls BlockChain.InsertChain to insert block data obtained from other nodes into the database. In BlockChain.InsertChain, the state and receipts data of each block will be calculated and verified one by one. If everything is normal, the synchronized block data and the state and receipts data calculated by itself will be written into the database together.
+
+Note that there are two processing methods in full mode, one of which saves all historical data, and this node is called "archive node". The other prunes the state. To become an "archive node", set the NoPruning field in the configuration file to true.
+
+##### fast mode
+
+The so-called "quick mode" is relative to the "full mode". In full mode, the state and receipts are calculated on the current machine based on the transactions in the block data. In fast mode, state and receipts are no longer calculated locally, but are directly synchronized from other nodes just like block data. Therefore, in the fast mode, the synchronous mode calls BlockChain.InsertReceiptChain to write the synchronized blocks and receipts directly into the blockchain database; and the state is also directly written into the library through stateDb.
+
+There is a currentFastBlock field in BlockChain, which represents the latest block on the main chain in fast mode.
+
+It can be seen that the fast mode replaces the local calculation of the state and receipts in the full mode by using the network direct synchronization method, and replaces the local computing resources with the network bandwidth.
+
+##### light mode
+
+Light mode, also called light mode, is a mode that only synchronizes block headers. In the light mode, the blockchain organization does not use the blockchain module, but the light module. This module is located in the "light" directory under the Ethereum project. The biggest difference from the blockchain module is that the light module only calls the related methods of HeaderChain to process the block header, but not other data. Only when other data other than the header of a certain block is needed, the required data is obtained.
+
+When calling loadLastState, if the state of currentBlock does not exist, then call repair to obtain and search up the currentBlock until a state exists.
 
 
 
@@ -299,34 +321,33 @@ Fixme
 
 ### Questions
 
-0. 以太坊的平均区块间隔时间是多少？
 
-1. 以太坊的平均区块大小是多少？
 
-2. 以太坊中的节点是什么？用什么方法可以连接到以太坊节点？
-
-3. 与以太坊网络交互都哪些方法？
-
-4. Name some Types of Ethereum Networks?
-
-5. What is an Ethereum Client?
-
-   
-
-6. How does a blockchain recognize a Block?
-
-7. In a Blockchain database, what various kinds of records can you find?
-
-8. Is it possible to make changes to the data after it has been written in a block?
-
-   The code about the blockchain structure in Ethereum is located in three directories:
-
-   core directory (only contains go files in the directory)
-   core/rawdb directory
-   light directory
-
-9. 以太坊主链已经很强大了，为什么还要使用以太坊私有链？
-
-10. 如何查看一笔交易或一个区块的详细信息？
-
-11. 如何查看私有链中一笔交易或一个区块的详细信息？
+- What is the average block interval time of Ethereum?
+  - The average block interval time of Ethereum is around 13-15 seconds
+- What is the average block size of Ethereum?
+  - The average block size of Ethereum varies depending on the number of transactions being processed, but it typically ranges between 20-30 kilobytes.
+- What are nodes in Ethereum? How can one connect to Ethereum nodes?
+  - Nodes in Ethereum refer to any computer or device that is connected to the Ethereum network and participates in validating transactions and maintaining the blockchain. One can connect to Ethereum nodes using a client program such as Geth or Parity, which allows communication with the network through the use of JSON-RPC APIs.
+- What are the methods for interacting with the Ethereum network?
+  - There are several methods for interacting with the Ethereum network, including:
+    - Using a client program such as Geth or Parity
+    - Using a web3.js library to communicate with the network through a web browser
+    - Utilizing a third-party service or API provider
+    - Deploying and interacting with smart contracts on the Ethereum Virtual Machine (EVM)
+- Name some Types of Ethereum Networks?
+  - Some types of Ethereum networks include the mainnet, testnets such as Ropsten and Rinkeby, and private networks used for development and testing purposes.
+- What is an Ethereum Client?
+  - An Ethereum client is a software program that is used to connect to the Ethereum network and participate in the validation of transactions and maintenance of the blockchain. Examples of Ethereum clients include Geth, Parity, and Besu.
+- How does a blockchain recognize a Block?
+  - A blockchain recognizes a block through a combination of its hash value, which is calculated based on the transactions contained within the block, and the hash value of the previous block in the chain. When a new block is added to the blockchain, it must be validated by a network of nodes to ensure that its hash value matches the previous block and that its transactions are valid.
+- In a Blockchain database, what various kinds of records can you find?
+  - In a blockchain database, you can find various kinds of records, including transactions, blocks, addresses, and smart contracts. Transactions record the transfer of cryptocurrency or other assets between parties, blocks group transactions together and form the basis of the blockchain, addresses are unique identifiers used to send and receive assets, and smart contracts are self-executing code that can be deployed and executed on the blockchain.
+- Is it possible to make changes to the data after it has been written in a block?
+   - Once data has been written to a block on the blockchain, it is extremely difficult, if not impossible, to change it. This is because the blockchain uses a cryptographic hash function to link each block to the previous one, creating an immutable chain of blocks. Any attempt to modify the data in a block would change its hash value, which would in turn invalidate all the subsequent blocks in the chain. Therefore, the blockchain is considered to be a secure and tamper-resistant way to store data.
+- Why use Ethereum private chains when the Ethereum main chain is already powerful?
+  - While the Ethereum main chain is powerful and widely used, there are situations where a private Ethereum blockchain may be more appropriate. Private chains offer greater control over the network, allowing organizations to customize network parameters and restrict access to specific participants. This can be useful for companies that require a high degree of privacy, security, and control over their data and applications. Private chains can also offer faster transaction times and lower transaction fees compared to the public Ethereum network.
+- How can I view detailed information about a transaction or block?
+  - To view detailed information about a transaction or block on the Ethereum main chain, you can use a blockchain explorer such as Etherscan. Simply enter the transaction hash or block number into the search bar and you will be able to see detailed information about the transaction or block, including the sender and recipient addresses, transaction fee, gas used, and more.
+- ？How can I view detailed information about a transaction or block on a private Ethereum chain?
+  - To view detailed information about a transaction or block on a private Ethereum chain, you will need to access the blockchain's node or use a blockchain explorer specifically designed for that private chain. Depending on the specific implementation of the private chain, you may need to obtain special permissions or access credentials to view this information.
