@@ -56,14 +56,16 @@ The main function of the Merkle Tree is that when the Top Hash is obtained, the 
 
 ### Ethereum Trie
 
-- ①在执行插入、修改或者删除操作后能快速计算新的树根，而无需重新计算整个树。
-- ②即使攻击者故意构造非常深的树，它的深度也是有限的。否则，攻击者可以通过特意构建足够深的树使得每次树更新变得极慢，从而执行拒绝服务攻击。
-- ③树的根值仅取决于数据，而不取决于更新的顺序。以不同的顺序更新，甚至是从头重新计算树都不会改变树的根值。
+Every time Ethereum executes a transaction, the state of the world corresponding to Ethereum changes. As a public chain platform, Ethereum has a large number of states corresponding to a large number of contracts. Rebuilding the state tree every time a state change occurs will undoubtedly consume huge computing resources. To solve this problem, Ethereum proposes a method of incrementally modifying the state tree. Every time the state of Ethereum changes, the original MPT tree will not be modified, but some branches will be created, as shown in the figure below;
 
 
 
-Fixme:
+![tree_change](..\pictures\tree_change.png)
 
-https://zhuanlan.zhihu.com/p/50242014
+Every time the state of Ethereum changes, it will only affect a small number of nodes in the world state MPT tree. The newly generated world state tree only needs to recalculate the hashes of a small number of affected nodes and the nodes connected to them.
 
-https://learnblockchain.cn/books/geth/part3/mpt.html
+The state of Ethereum is very suitable for storage by MPT tree. The characteristics of MPT tree are very consistent with the characteristics of Ethereum state. When using MPT tree to store the state of Ethereum, it can bring the following advantages;
+
+1. When the balance of an account changes, the hash of the corresponding path also changes, and then the hash value on the corresponding path is updated from the bottom up until the State Root, so that the minimum number of hashes can be calculated.
+2. The full node in Ethereum maintains an incremental MPT state tree, because each block modifies only a small part of the world state. **Incremental modification** is not only conducive to block rollback, but also saves overhead.
+3. Temporary block forks are common in Ethereum, but due to the complexity of Ethereum smart contracts, it is difficult to roll back the state according to the contract code if the original state is not recorded.
