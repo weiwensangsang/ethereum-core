@@ -55,3 +55,5 @@ Of course, some people still use the original 1.0 chain, but its vitality is def
 
 
 ### Source code for Miner
+
+https://cloud.tencent.com/developer/article/1115159
