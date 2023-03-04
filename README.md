@@ -15,9 +15,11 @@ This project will give a detailed introduction to the technical history, working
 
 4. [Mining: ChainConfig](./ethereum/mining-chainconfig.md)
 
-5. [EIP-1559](./ethereum/eip-1559.md)
+5. [Mining: Start](./ethereum/mining-start.md)
 
-6. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
+6. [EIP-1559](./ethereum/eip-1559.md)
+
+7. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
 
    
 
