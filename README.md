@@ -6,22 +6,21 @@ This project will give a detailed introduction to the technical history, working
 ### Ethereum: new blcokchain
 
 0. [Why We Want a New Blockchain?](./ethereum/why-we-want-a-new-blockchain.md)
-
 1. [Ethereum Trie](./ethereum/ethereum-trie.md)
-
 2. [Ethereum Account and State](./ethereum/ethereum-account-state.md)
-
 3. [Ethereum Block and Network](./ethereum/ethereum-block-and-network.md)
-
 4. [Mining: ChainConfig](./ethereum/mining-chainconfig.md)
-
 5. [Mining: Start](./ethereum/mining-start.md)
 
-6. [EIP-1559](./ethereum/eip-1559.md)
 
-7. [Why Use GoLang to Build a Blockchain?](./ethereum/why-use-golang-to-build-a-blockchain.md)
 
-   
+### Account and Transaction 
+
+1. [Create an Account](./ethereum/create-an-account.md)
+2. [Private Key](./ethereum/private-key.md)
+3. [Start Transaction](./ethereum/transaction.md)
+4. [Gas](./ethereum/gas.md)
+5. [EIP-1559](./ethereum/eip-1559.md)
 
 
 
@@ -126,29 +125,6 @@ This project will give a detailed introduction to the technical history, working
 34. [How to attack a smart contract?](problems/how-to-attack-smart-contract.md)
 
 
-
-### Account
-
-1. Which types of accounts can you find in Ethereum?
-2. What are the important fields in Ethereum accounts?
-3. 在私钥丢失后，用户是否还可以恢复以太坊帐户？
-
-
-
-### Transaction 
-
-1.  What is a transaction request?
-2. What is the recommended method for checking the ETH balance?
-3. 以太坊的交易记录存放在哪里？
-4. Can you explain the difference between on chain and off chain transactions in web3
-5. 你是否能在以太坊中“隐藏”一笔交易？
-6. 为什么以太坊中要引入燃料费用呢？
-7. 燃料价格是否能决定交易被处理的时间？
-8. 交易中的燃料使用量取决于什么？
-9. 交易费该如何计算？
-10. 签署一笔交易需要用到什么工具？
-
-#### 
 
 #### DApp
 
