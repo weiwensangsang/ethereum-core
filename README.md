@@ -13,7 +13,7 @@ This project will give a detailed introduction to the technical history, working
 
 3. [Ethereum Block and Network](./ethereum/ethereum-block-and-network.md)
 
-4. [Mining](./ethereum/mining.md)
+4. [Mining: ChainConfig](./ethereum/mining-chainconfig.md)
 
 5. [EIP-1559](./ethereum/eip-1559.md)
 
