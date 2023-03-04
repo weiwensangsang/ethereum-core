@@ -18,43 +18,10 @@ This project will give a detailed introduction to the technical history, working
 
 1. [Create an Account](./ethereum/create-an-account.md)
 2. [Private Key](./ethereum/private-key.md)
-3. [Start Transaction](./ethereum/transaction.md)
-4. [Gas](./ethereum/gas.md)
-5. [EIP-1559](./ethereum/eip-1559.md)
-
-
-
-### Security 
-
-1. How do you handle security in web3 applications and what are some best practices
-
-2. What is the difference between proof of work pow and proof of stake pos differ
-
-3. What is Cryptography?
-
-4. How does a blockchain achieve consensus and what are some common consensus algorithm
-
-5. What is the Encryption Function in the Blockchain?
-
-6. Blockchain Ecosystem: What Are the Essential Elements? Explain.**
-
-7. zero knowledge proof
-
-8. 区块链的共识过程是什么？
-
-9. 以太坊挖矿操作的工作原理是什么呢？
-
-10. 区块链中最常用的两种共识协议是什么？
-
-11. 请简述权益证明的工作原理。
-
-12. 以太坊使用哪种共识协议呢？
-
-13. Classical Smart contract Securilty problems
-
-14. 挖矿选项中的“etherbase”是什么？
-
-    
+3. [Ether](./ethereum/ether.md)
+4. [Start Transaction](./ethereum/transaction.md)
+5. [Gas](./ethereum/gas.md)
+6. [EIP-1559](./ethereum/eip-1559.md)
 
 
 
@@ -73,14 +40,6 @@ This project will give a detailed introduction to the technical history, working
 
 7. EVM调用和非EVM调用之间有什么区别呢？
 8. 以太坊虚拟机需要什么工具来运行智能合约？
-
-
-
-### Token
-
-1. How is Ether used in the Ethereum blockchain?
-2. 在以太坊中，Wei和Ether(以太币)有什么区别？
-3. 以太币是如何产生的？
 
 
 
@@ -132,6 +91,38 @@ This project will give a detailed introduction to the technical history, working
 2. Are there any Popular Platforms for Building Blockchain Applications?**
 3. DApp与智能合约有何不同？
 4. DApp和智能合约如何交互？
+
+
+
+### Security 
+
+1. How do you handle security in web3 applications and what are some best practices
+
+2. What is the difference between proof of work pow and proof of stake pos differ
+
+3. What is Cryptography?
+
+4. How does a blockchain achieve consensus and what are some common consensus algorithm
+
+5. What is the Encryption Function in the Blockchain?
+
+6. Blockchain Ecosystem: What Are the Essential Elements? Explain.**
+
+7. zero knowledge proof
+
+8. 区块链的共识过程是什么？
+
+9. 以太坊挖矿操作的工作原理是什么呢？
+
+10. 区块链中最常用的两种共识协议是什么？
+
+11. 请简述权益证明的工作原理。
+
+12. 以太坊使用哪种共识协议呢？
+
+13. Classical Smart contract Securilty problems
+
+14. 挖矿选项中的“etherbase”是什么？
 
 
 
