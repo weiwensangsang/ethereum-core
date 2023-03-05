@@ -1,8 +1,18 @@
 # Transaction
 
+如何签名？
+
+发送地址和公钥是等价的吗？
+
+在不暴露私钥的情况下，一个外部节点是如何根据签名和公钥就可以进行验证？
+
+
+
+
+
 fixme
 
-
+https://zhuanlan.zhihu.com/p/573063385
 
 What is a transaction request?
 
