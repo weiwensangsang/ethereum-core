@@ -1,5 +1,0 @@
-# Solidity
-
-
-
-to be done.
