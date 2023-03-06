@@ -23,105 +23,49 @@ This project will give a detailed introduction to the technical history, working
 
 
 
-### EVM
-
-1. What is the importance of EVM in Ethereum
-2. 以太坊虚拟机都包含哪些部分？以太坊虚拟机的内存都有哪些部分？
-
-3. 请解释一下存储（Storage）。
-
-4. 请解释一下内存（Memory）。
-
-5. 请解释一下Calldata。
-
-6. 存储区和内存区分别存储了哪些变量？
-
-7. EVM调用和非EVM调用之间有什么区别呢？
-8. 以太坊虚拟机需要什么工具来运行智能合约？
-
-
-
 ### Smart Contract
 
-1. What is a smart contract?
-2. ERC-20
-3. Which languages are used commonly for smart contract development?
-4. How can smart contracts serve real-world use cases?
-5. Do you know about the components of a smart contract?
-6. How can you reduce gas costs for smart contracts?
-7. What are the steps involved in smart contract verification?
-8. How is a smart contract library useful?
-9. What must be in place before smart contracts can be used?
-10. What steps are there to verify a smart contract?
-11. How can we Developing MyContract?
-12. How can we return mapping list in Solidity?
-13. Solidity是静态类型语言（类型的检查是在运行前做的，如编译阶段）还是动态类型语言（类型的检查是在运行时做的）？
-14. Solidity中的什么结构与Java中的类（Class）相对应？
-15. 智能合约的实例是什么？
-16. 在Solidity文件中需要指定的第一个参数是什么？
-17. 一个智能合约包含什么？
-18. 智能合约中都有哪些类型的函数？
-19. 如果我将多个智能合约定义放入单个Solidity文件中，会出现什么样的错误？
-20. 两个智能合约可以通过哪些方式进行交互？
-21. 当你尝试部署具有多个智能合约的文件时会发生什么？
-22. 如果我有一个庞大的项目，我是否需要将所有相关的智能合约保存在一个文件中？
-23. 我是否只能导入本地文件？
-24. ABI是什么？
-
-25. 智能合约的执行是免费的吗？
-
-26. 查看智能合约的状态是免费的吗？
-
-27. 谁来执行智能合约？
-28. 如何设定智能合约的以太币余额限制，如果向有余额限制的智能合约中发送超额的以太币会发生什么？
-29. 如何在智能合约帐户中设置msg.val的值？
-30. 如果执行智能合约的花费少于交易者支付的燃料费用，他是否会获得退款？
-31. 问：节点在哪里运行智能合约的代码呢？
-32. What are the recommended methods for testing smart contracts?
-33. Do you know the specific methods for automated and manual testing of smart contracts?
-34. What are the mandatory prerequisites for deploying smart contracts?
-35. [How to attack a smart contract?](problems/how-to-attack-smart-contract.md)
-
-
-
-#### DApp
-
-1. Can you describe a decentralized application?
-2. Are there any Popular Platforms for Building Blockchain Applications?**
-3. DApp与智能合约有何不同？
-4. DApp和智能合约如何交互？
+1. [What is the importance of EVM in Ethereum](./ethereum/evm.md)
+2. [What is a Smart Contract?](./ethereum/smart-contracrt.md)
+3. [Solidity](./ethereum/solidity.md)
+4. [Smart Contract Best Practice](./ethereum/smart-contracrt-best-practice.md)
+5. [Run a Smart Contract](./ethereum/run-smart-contracrt.md)
+6. Smart Contract：Create an ERC-20 Token
+7. [DApp](./ethereum/dapp.md)
 
 
 
 ### Security 
 
-1. How do you handle security in web3 applications and what are some best practices
+1. [How to attack a smart contract?](problems/how-to-attack-smart-contract.md)
 
-2. What is the difference between proof of work pow and proof of stake pos differ
+2. How do you handle security in web3 applications and what are some best practices
 
-3. What is Cryptography?
+3. What is the difference between proof of work pow and proof of stake pos differ
 
-4. How does a blockchain achieve consensus and what are some common consensus algorithm
+4. What is Cryptography?
 
-5. What is the Encryption Function in the Blockchain?
+5. How does a blockchain achieve consensus and what are some common consensus algorithm
 
-6. Blockchain Ecosystem: What Are the Essential Elements? Explain.**
+6. What is the Encryption Function in the Blockchain?
 
-7. zero knowledge proof
+7. Blockchain Ecosystem: What Are the Essential Elements? Explain.**
 
-8. 区块链的共识过程是什么？
+8. zero knowledge proof
 
-9. 以太坊挖矿操作的工作原理是什么呢？
+9. 区块链的共识过程是什么？
 
-10. 区块链中最常用的两种共识协议是什么？
+10. 以太坊挖矿操作的工作原理是什么呢？
 
-11. 请简述权益证明的工作原理。
+11. 区块链中最常用的两种共识协议是什么？
 
-12. 以太坊使用哪种共识协议呢？
+12. 请简述权益证明的工作原理。
 
-13. Classical Smart contract Securilty problems
+13. 以太坊使用哪种共识协议呢？
 
-14. 挖矿选项中的“etherbase”是什么？
+14. Classical Smart contract Securilty problems
+
+15. 挖矿选项中的“etherbase”是什么？
 
 
 
