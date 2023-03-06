@@ -29,7 +29,7 @@ This project will give a detailed introduction to the technical history, working
 
 1. [What is the Importance of EVM in Ethereum](./ethereum/evm.md)
 2. [What is a Smart Contract?](./ethereum/smart-contracrt.md)
-3. Solidity
+3. [Solidity](./ethereum/solidity.md)
 4. [Tether：Create an ERC-20 Token](./ethereum/erc20-token.md)
 5. [BoredApeYachtClub：Create an ERC-721 Token](./ethereum/erc721-token.md)
 6. [ERC-1155 Token](./ethereum/erc1155-token.md)
