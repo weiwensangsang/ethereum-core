@@ -39,7 +39,7 @@ This project will give a detailed introduction to the technical history, working
 
 ### Security 
 
-1. [How to attack a smart contract?](problems/how-to-attack-smart-contract.md)
+1. [How to attack a smart contract?](ethereum/how-to-attack-smart-contract.md)
 
 2. How do you handle security in web3 applications and what are some best practices
 
