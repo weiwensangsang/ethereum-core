@@ -188,5 +188,3 @@ So, k = K
 - What tools are needed to sign a transaction?
 
   - Private Key
-
-  

@@ -63,4 +63,3 @@ This is somewhat reasonable, as Counterparty essentially inserts its own data in
 
 
 **So, what should engineers do?**
-

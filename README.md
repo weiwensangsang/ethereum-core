@@ -21,7 +21,7 @@ This project will give a detailed introduction to the technical history, working
 1. [Create an Account](./ethereum/create-an-account.md)
 2. [Private Key: secp256k1](./ethereum/private-key-secp256k1.md)
 4. [Transaction with ECDSA](./ethereum/transaction.md)
-6. [Gas and EIP-1559](./ethereum/eip-1559.md)
+6. [Gas and EIP-1559](./ethereum/gas-eip-1559.md)
 
 
 

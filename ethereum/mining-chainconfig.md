@@ -236,9 +236,3 @@ After the Byzantium hard fork, the Ethereum network introduced some new features
 ### ShanghaiTime
 
 Ethereum nodes use the ShanghaiTime property to calculate the timestamps of blocks, ensuring that the timestamps in the blockchain are accurate and consistent with Shanghai time. This can be important for certain blockchain applications and smart contracts that need to determine the exact time something happened, such as in time-sensitive transactions that require proof of certain events.
-
-
-
-
-
-
