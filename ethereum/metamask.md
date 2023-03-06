@@ -1,0 +1,1 @@
+What is Metamask? ：Metamask使用什么节点？ 相比于传统以太坊钱包，有哪些功能是Metamask不支持的？
