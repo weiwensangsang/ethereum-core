@@ -38,16 +38,10 @@ This project will give a detailed introduction to the technical history, working
 
 
 
-### Gas
-
-1. [Gas and EIP-1559](./ethereum/gas-eip-1559.md)
-2. Gas of Smart Contract
-
-
-
 ### Security 
 
-1. [How to Attack a Smart Contract?](ethereum/how-to-attack-smart-contract.md)
+1. [How to Protect a Smart Contract?](ethereum/how-to-protect-smart-contract.md)
+1. [How to Attack a Smart Contract](ethereum/how-to-attack.md)
 
 
 
