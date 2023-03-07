@@ -34,7 +34,14 @@ This project will give a detailed introduction to the technical history, working
 5. [BoredApeYachtClub：Create an ERC-721 Token](./ethereum/erc721-token.md)
 6. [ERC-1155 Token](./ethereum/erc1155-token.md)
 7. [Smart Contract Best Practice](./ethereum/smart-contracrt-best-practice.md)
-9. [DApp](./ethereum/dapp.md)
+8. [DApp](./ethereum/dapp.md)
+
+
+
+### Gas
+
+1. [Gas and EIP-1559](./ethereum/gas-eip-1559.md)
+2. Gas of Smart Contract
 
 
 
