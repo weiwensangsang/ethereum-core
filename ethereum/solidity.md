@@ -2,8 +2,6 @@
 
 
 
-
-
 ```solidity
 pragma solidity ^0.4.21;
 
@@ -33,54 +31,44 @@ contract Coin {
 }
 ```
 
+1. When each smart contract is created, it will rely on a smart contract account.
 
+2. Each smart contract account has a storage, which is a KV database. Minter and balances in the instance will enter it, and there is no clear maximum capacity limit for storage.
 
-每一个智能合约创建的时候都会依托于一个智能合约账户。
+3. Every call to a smart contract function is equivalent to a transaction, and the transaction needs to be recorded in the block. The Ethereum blockchain can only produce one block at a time. This ensures orderliness.
 
-每一个智能合约账号有一个storage，它是一个KV数据库。实例中的minter和balances就将进入其中，storage的没有明确的最大容量限制。
+4. Essentially any node can execute the function, which is concurrent. But only one execution result is recognized.
 
-每一个对于智能合约函数的调用，都相当于进行一次交易，交易需要记录到区块中。以太坊的区块链在同一个时间只能出产一个块。这保证了有序性。
+5. As long as it is a variable stored in storage, it can be obtained directly without executing the contract function.
 
-本质上任何节点都可以执行函数，这是并发的。但是执行结果被认可则只有一个。
+6. Read-only Calldata changes the state of storage, which is the nature of most functions.
 
-只要是储存在storage里面的变量，都是可以通过不执行合约函数就直接获取。
+7. The payable function modifier enables Solidity contracts to accept payment in ether
 
-一次调用可以被拆解为只读的Calldata 通过固定的ABI改变storage的状态。
-
-payable函数修饰符可以使Solidity合约接受以太币支付
-
-当智能合约的函数执行到中途报错时，函数状态会自动回滚到函数执行前的状态，以确保合约的状态不会被修改到一个无效或不一致的状态。
-
+8. When an error is reported in the middle of the execution of the function of the smart contract, the function state will automatically roll back to the state before the function execution to ensure that the state of the contract will not be modified to an invalid or inconsistent state.
 
 
 
+### Global Variables
 
+There are many predefined global variables in Solidity, here are some common ones:
 
+1. msg.sender - contains the address of the caller of the current function, used to verify the identity of the caller.
+2. msg.value - Contains the amount of ether sent by the caller of the current function for receiving ether in the smart contract.
+3. now - the timestamp of the current block (in seconds), which can be used to get the current time in the smart contract.
+4. block.timestamp - the timestamp (in seconds) of the current block, same as the now variable.
+5. block.number - the block number of the current block.
+6. address(this) - the address of the current smart contract, used to refer to itself in the smart contract.
+7. tx.origin - Contains the sender address of the transaction, not the address of the calling contract. Normally, tx.origin should not be used to authenticate the caller.
+8. gasleft() - contains how much gas is left in the current transaction, which can be used to determine the gas usage of the current transaction in the smart contract.
 
-Solidity中有许多预定义的全局变量，以下是其中一些常见的：
-
-1. msg.sender - 包含当前函数的调用者的地址，用于验证调用者的身份。
-2. msg.value - 包含当前函数的调用者发送的以太币的数量，用于在智能合约中接收以太币。
-3. now - 当前区块的时间戳（以秒为单位），可以用于在智能合约中获取当前时间。
-4. block.timestamp - 当前区块的时间戳（以秒为单位），与now变量相同。
-5. block.number - 当前区块的区块号。
-6. address(this) - 当前智能合约的地址，用于在智能合约中引用自身。
-7. tx.origin - 包含交易的发送者地址，而不是调用合约的地址。通常情况下，不应使用tx.origin来验证调用者的身份。
-8. gasleft() - 包含当前交易还剩下多少gas，可用于在智能合约中确定当前交易的gas使用情况。
-
-这些全局变量提供了在智能合约中获取各种信息的方便方法，可以用于编写各种不同类型的智能合约。但是，需要小心使用它们，以避免安全漏洞和错误的行为。
+These global variables provide a convenient way to obtain various information in smart contracts, and can be used to write various types of smart contracts. However, they need to be used with care to avoid security holes and misbehavior.
 
 
 
 
 
-哪些字段会被存储在memory中，哪些字段会被持久化？持久化到什么地方？
-
-为什么要发送Event？
-
-
-
-我们再次使用USDT的只能合约代码，来理解Solidity
+### USDT
 
 
 
@@ -92,9 +80,7 @@ Solidity中有许多预定义的全局变量，以下是其中一些常见的：
 pragma solidity ^0.4.17;
 ```
 
-
-
-
+The pragma instructs to use a specific version of Solidity. ^0.4.17 means to use 0.4.17 and all latest versions that are upwardly compatible with that version, such as 0.4.18, 0.4.19, etc. If you declare a version with the "^" symbol, the compiler will automatically select the latest version that is upwardly compatible with the current Solidity compiler version for compilation.
 
 ```solidity
 /**
@@ -130,6 +116,16 @@ library SafeMath {
     }
 }
 ```
+
+
+
+- `library`: Indicates that this is a Solidity library (library), used to implement reusable code modules, be careful using other people's libraries.
+- `internal`: Indicates that this function can only be called inside the current contract or its inherited contracts, and cannot be called from outside the contract.
+- `pure`: Indicates that this function will not modify the state of the contract, and will not access the storage variables of the contract, nor will it interact with other contracts.
+- `returns`: indicates that this function will return one or more values.
+- `assert`: Indicates that if the function execution fails, an exception will be thrown (that is, the assertion failed) to terminate the program execution.
+
+
 
 
 
@@ -215,21 +211,12 @@ contract Pausable is Ownable {
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- `modifier` is used to define a reusable modifier function. A modifier is a special function that can be used to modify the behavior of a function, it can be added to the function definition to perform some logic checks or modifications on the function before or after the function is executed. Using modifiers can simplify your code, improve code readability, and reduce repetitive logic in your code.
+- `event` is a special type in Solidity used to trigger notifications inside smart contracts. Events are a lightweight communication mechanism for making notifications within smart contracts and providing data to external applications. An application can listen to events and perform some actions when the event is triggered. Events are often used to record important activities and state changes in smart contracts so that applications can respond to these changes.
+- `public` is a function access modifier in Solidity. Functions declared with the public keyword can be called by anyone, including addresses inside and outside the contract. State variables declared public can be read by anyone inside or outside the contract. It should be noted that public functions may affect the state of the contract, so security and logical correctness need to be carefully considered when writing public functions.
+- The underscore `_` is often used as a placeholder to denote the position of a function or modifier parameter. In the function or modifier definition, the position of the underscore `_` will be replaced by the actual parameter. For example, here's a simple example using underscores:
+- Require is an exception handling mechanism, which is used to check whether certain conditions are met during function execution. If the conditions are not met, the function execution is terminated and all states during the execution process are restored to the state before the function call. `
+- The is keyword is used to indicate inheritance
 
 
 
@@ -331,7 +318,7 @@ contract StandardToken is BasicToken, ERC20 {
     * @param _from address The address which you want to send tokens from
     * @param _to address The address which you want to transfer to
     * @param _value uint the amount of tokens to be transferred
-    */
+    */ 
     function transferFrom(address _from, address _to, uint _value) public onlyPayloadSize(3 * 32) {
         var _allowance = allowed[_from][msg.sender];
 
@@ -393,11 +380,34 @@ contract UpgradedStandardToken is StandardToken{
 }
 ```
 
+In Solidity, when defining a function, you can first declare information such as the name, parameters, and return value type of the function, without having to implement the function body immediately. Such a function is called a function signature (Function Signature).
+
+The `using SafeMath for uint;` statement is used to apply the safe math functions in the `SafeMath` library to the data of type `uint`. This means that in `uint` type data, you can use `add`, `sub`, `mul`, `div` and other safe mathematical operation functions instead of native operators, so as to prevent mathematical overflow or underflow, etc. question.
+
+In Solidity, `msg.sender` is a global variable that represents the address of the account that calls the current contract function. In Ethereum, each transaction has a sender (Sender), `msg.sender` is the sender address of the current transaction.
+
+`msg.sender` can be used to verify whether the user calling the contract function has the permission to execute the function. For example, if the contract function only allows the owner of the contract to execute, you can use `require(msg.sender == owner)` inside the function to verify whether the caller is the owner of the contract, and if not, an exception will be thrown, Function execution terminates.
 
 
 
+Suppose A wants to trade with B, and the exchange is C, then the transaction process is roughly as follows:
+
+1. A submits an order to buy tokens on exchange C.
+2. C generates a new order number and requests A to authorize the token transfer.
+3. A calls the `approve` function of the token contract it holds, and authorizes a certain amount of tokens to C, so that C can transfer tokens on behalf of A.
+4. A sends the authorized order number and related information to C.
+5. B submits an order to sell tokens on exchange C.
+6. C generates a new order number and requests token transfer from B.
+7. B calls the `approve` function of the token contract it holds, and authorizes a certain amount of tokens to C, so that C can transfer tokens on behalf of B.
+8. B sends the authorized order number and related information to C.
+9. C calls the `transferFrom` function of the token contract according to the order number and authorization information, transfers the token from account A to account B, and draws a certain percentage of handling fees.
+10. C updates the order status and notifies A and B that the order has been completed.
+
+In this transaction process, both A and B need to call the `approve` function to authorize C to transfer tokens on their behalf. C needs to call the `transferFrom` function to realize the token transfer and extract the handling fee. Since the proxy account can only call the `transferFrom` function after being authorized, the security and trustworthiness of the token transfer process can be ensured.
 
 
+
+Note that this means that C is trusted.
 
 ```solidity
 contract BlackList is Ownable, BasicToken {
@@ -440,7 +450,12 @@ contract BlackList is Ownable, BasicToken {
 }
 ```
 
+- `external`: Indicates that the function can only be called from outside the contract, not inside the contract. Usually used in public functions to provide the external interface of the contract.
+- `constant`: Indicates that the function will not modify the state variables of the contract, nor will it generate any transaction fees, but just read the value of the contract state and return it. Such functions are also often referred to as "view functions" or "pure functions".
 
+In Solidity, `external` and `constant` can modify a function at the same time, indicating that the function is not only a function that can only be called from outside the contract, but also a pure function that does not modify the state of the contract. This kind of function is usually used to query the value of the contract state without modifying the state.
+
+Annotating a function helps the compiler with code optimization and error checking, but it doesn't affect the actual gas cost. When you call a function in a contract, you need to pay the gas fee for the function to execute, regardless of whether the function is marked or not.
 
 
 
@@ -585,9 +600,3 @@ contract TetherToken is Pausable, StandardToken, BlackList {
     event Params(uint feeBasisPoints, uint maxFee);
 }
 ```
-
-
-
-
-
-https://solidity-cn.readthedocs.io/zh/develop/index.html
