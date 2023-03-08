@@ -31,11 +31,9 @@ Around 2013, ZK-SNARKs (Zero-Knowledge Succinct Non-Interactive Argument of Know
 
 
 
-fixme
+Zcash is the first widespread application of zk-SNARKs, a novel form of zero-knowledge cryptography. Zcash's strong privacy guarantees stem from the fact that shielded transactions in Zcash can be fully encrypted on the blockchain, yet still verifiable under the network's consensus rules by using zk-SNARK proofs.
 
-Zcash 是 zk-SNARKs 的第一个广泛应用，zk-SNARKs 是一种新颖的零知识密码学形式。Zcash 强大的隐私保证源于这样一个事实，即 Zcash 中的屏蔽交易可以在区块链上完全加密，但仍然可以通过使用 zk-SNARK 证明在网络的共识规则下验证其有效性。
-
-首字母缩略词 zk-SNARK 代表“零知识简洁的非交互式知识论证”，指的是一种证明结构，在这种结构中，人们可以证明拥有某些信息，例如一个秘密密钥，而无需透露该信息，并且之间没有任何交互证明者和验证者。
+The acronym zk-SNARK stands for "Zero-Knowledge Succinct Non-Interactive Argument of Knowledge" and refers to a proof structure in which one can prove possession of certain information, such as a secret key, while There is no need to reveal that information, and there is no interaction between prover and verifier.
 
 
 
