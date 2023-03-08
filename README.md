@@ -41,7 +41,7 @@ This project will give a detailed introduction to the technical history, working
 ### Security 
 
 1. [How to Protect a Smart Contract?](ethereum/how-to-protect-smart-contract.md)
-1. [How to Attack a Smart Contract](ethereum/how-to-attack.md)
+1. [How to Attack a Smart Contract?](ethereum/how-to-attack.md)
 
 
 
