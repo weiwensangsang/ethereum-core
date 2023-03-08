@@ -586,3 +586,244 @@ Attack steps:
    As can be seen from the documentation, msg.sender and tx.origin represent different meanings:
    1. msg.sender: the current caller
    2. tx.origin: transaction sender
+
+
+
+
+
+## Race across functions
+
+An attacker could also use two different functions that share state variables to perform a similar attack.
+
+```texts
+// INSECURE
+mapping (address => uint) private userBalances;
+
+function transfer(address to, uint amount) {
+    if (userBalances[msg.sender] >= amount) {
+       userBalances[to] += amount;
+       userBalances[msg.sender] -= amount;
+    }
+}
+
+function withdrawBalance() public {
+    uint amountToWithdraw = userBalances[msg.sender];
+    if (!(msg.sender.call.value(amountToWithdraw)())) { throw; } // At this point, the caller's code is executed, and can call transfer()
+    userBalances[msg.sender] = 0;
+}
+```
+
+In this example, the attacker calls transfer() when they call the withdrawBalance function externally. If the withdrawBalance has not been executed to userBalances[msg.sender] = 0; here, then their balance has not been cleared, then they can call transfer() to transfer tokens even though they have already received them. This weakness can also be used to attack the DAO.
+
+The same solution will work, zeroing out before performing the transfer operation. Also note that in this example all functions are within the same contract. However, the same bug can also occur in cross-contract calls if those contracts share state.
+
+## pitfalls in the race solution
+
+Since race conditions can occur across function calls as well as cross-contract calls, any solution that simply avoids reentrancy will not be sufficient.
+
+Instead, we recommend that all internal work should be done first before making external calls. This rule avoids race conditions. However, you should not only avoid calling extrinsic functions prematurely but also avoid calling extrinsic functions that also call extrinsic functions. For example, the following piece of code is unsafe:
+
+```text
+// INSECURE
+mapping (address => uint) private userBalances;
+mapping (address => bool) private claimedBonus;
+mapping (address => uint) private rewardsForA;
+
+function withdraw(address recipient) public {
+    uint amountToWithdraw = userBalances[recipient];
+    rewardsForA[recipient] = 0;
+    if (!(recipient.call.value(amountToWithdraw)())) { throw; }
+}
+
+function getFirstWithdrawalBonus(address recipient) public {
+    if (claimedBonus[recipient]) { throw; } // Each recipient should only be able to claim the bonus once
+
+    rewardsForA[recipient] += 100;
+    withdraw(recipient); // At this point, the caller will be able to execute getFirstWithdrawalBonus again.
+    claimedBonus[recipient] = true;
+}
+```
+
+Although getFirstWithdrawalBonus() does not directly call the external contract, it calls withdraw() which causes a race condition. Here you should not consider withdraw() to be trusted.
+
+```text
+mapping (address => uint) private userBalances;
+mapping (address => bool) private claimedBonus;
+mapping (address => uint) private rewardsForA;
+
+function untrustedWithdraw(address recipient) public {
+    uint amountToWithdraw = userBalances[recipient];
+    rewardsForA[recipient] = 0;
+    if (!(recipient.call.value(amountToWithdraw)())) { throw; }
+}
+
+function untrustedGetFirstWithdrawalBonus(address recipient) public {
+    if (claimedBonus[recipient]) { throw; } // Each recipient should only be able to claim the bonus once
+
+    claimedBonus[recipient] = true;
+    rewardsForA[recipient] += 100;
+    untrustedWithdraw(recipient); // claimedBonus has been set to true, so reentry is impossible
+}
+```
+
+In addition to fixing bugs to make reentrancy impossible, [untrusted functions have also been marked](https://link.zhihu.com/?target=https%3A//github.com/ConsenSys/smart-contract -best-practices%23mark-untrusted-contracts). Same scenario: untrustedGetFirstWithdrawalBonus() calls untrustedWithdraw(), which calls an external contract, so untrustedGetFirstWithdrawalBonus() is unsafe here.
+
+Another frequently mentioned solution is (*Translator's Note: Like in traditional multithreaded programming*) using [mutex](https://link.zhihu.com/?target=https%3A//en. wikipedia.org/wiki/Mutual_exclusion). It "locks" the current state, and only the current owner of the lock can change the current state. A simple example is as follows:
+
+```text
+// Note: This is a rudimentary example, and mutexes are particularly useful where there is substantial logic and/or shared state
+mapping (address => uint) private balances;
+bool private lockBalances;
+
+function deposit() payable public returns (bool) {
+    if (!lockBalances) {
+        lockBalances = true;
+        balances[msg.sender] += msg.value;
+        lockBalances = false;
+        return true;
+    }
+    throw;
+}
+
+function withdraw(uint amount) payable public returns (bool) {
+    if (!lockBalances && amount > 0 && balances[msg.sender] >= amount) {
+        lockBalances = true;
+
+        if (msg.sender.call(amount)()) { // Normally insecure, but the mutex saves it
+          balances[msg.sender] -= amount;
+        }
+
+        lockBalances = false;
+        return true;
+    }
+
+    throw;
+}
+```
+
+If the user tries to call withdraw() a second time before the first call completes, they will be locked. This seems to work, but the problem becomes serious when you use multiple contracts to interact with each other. Here is an unsafe piece of code:
+
+```text
+// INSECURE
+contract StateHolder {
+    uint private n;
+    address private lockHolder;
+
+    function getLock() {
+        if (lockHolder != 0) { throw; }
+        lockHolder = msg.sender;
+    }
+
+    function releaseLock() {
+        lockHolder = 0;
+    }
+
+    function set(uint newState) {
+        if (msg.sender != lockHolder) { throw; }
+        n = newState;
+    }
+}
+```
+
+An attacker could just call getLock() and never call releaseLock() again. If they do this, the contract will be permanently locked, and any subsequent operations will not happen. If you use mutexes to avoid race conditions, then make sure that there is no place that can interrupt the lock process or never release the lock. (There is also a potential threat here, such as deadlock and livelock. It is best to read a lot of relevant literature before you decide to use locks (*Translator's Note: This is true, the traditional use of locks in a multi-threaded environment Always an easy place to go wrong *))
+
+
+
+\* Some people might object to using the term *race*, since Ethereum doesn't really implement parallel execution. Yet the logic remains a race for resources, the same pitfalls and potential solutions.
+
+
+
+## Transaction Order Dependency (TOD) / Previous runs first
+
+The above is an example of a race condition involving an attacker executing malicious code within a **single transaction**. The following demonstrates the race condition caused by the operation principle of the blockchain itself: the order of transactions (in the same block) is easily manipulated.
+
+Since the transaction will be stored in the mempool in a short period of time, it is possible to know what will happen before the miner packs it into the block. This is cumbersome for a decentralized marketplace, since token transactions can be viewed and the order of transactions can be changed before it is included in a block. Avoiding this is difficult because it comes down to the specific contract itself. For example, in marketplaces, it is better to implement batch auctions (this also prevents high-frequency trading problems). Another way to use the pre-commit scheme ("I'll provide details later").
+
+
+
+## Timestamp dependencies
+
+Note that the timestamps of blocks can be manipulated by miners, and all direct and indirect uses of timestamps should be considered. **Block count** and **Average block time** can be used to estimate time, but this is not proof that block time may change in the future (such as Casper expects changes).
+
+```text
+uint someVariable = now + 1;
+
+if (now % 2 == 0) { // the now can be manipulated by the miner
+
+}
+
+if ((someVariable - 100) % 2 == 0) { // someVariable can be manipulated by the miner
+
+}
+```
+
+
+
+## Integer overflow and underflow
+
+There are about [20 examples of overflow and underflow](https://link.zhihu.com/?target=https%3A//github.com/ethereum/solidity/issues/796%23issuecomment-253578925).
+
+Consider this simple transfer operation:
+
+```text
+mapping (address => uint256) public balanceOf;
+
+// INSECURE
+function transfer(address _to, uint256 _value) {
+    /* Check if sender has balance */
+    if (balanceOf[msg.sender] < _value)
+        throw;
+    /* Add and subtract new balances */
+    balanceOf[msg.sender] -= _value;
+    balanceOf[_to] += _value;
+}
+
+// SECURE
+function transfer(address _to, uint256 _value) {
+    /* Check if sender has balance and for overflows */
+    if (balanceOf[msg.sender] < _value || balanceOf[_to] + _value < balanceOf[_to])
+        throw;
+
+    /* Add and subtract new balances */
+    balanceOf[msg.sender] -= _value;
+    balanceOf[_to] += _value;
+}
+```
+
+If the balance reaches the maximum value of **uint** (2^256), it will become 0 again. Should check here. Whether overflow is relevant depends on the specific implementation. Think if there is a chance that the uint value will be that big or and who will change it's value. If any user has the right to change the value of uint then it will be more vulnerable. If only administrators can change its value, then it's probably safe, since there's no other way to get around that restriction.
+
+The same is true for underflow. If a uint is changed to less than 0, it will cause it to underflow and be set to the maximum value (2^256).
+
+Also be careful with smaller numeric types like uint8, uint16, uint24, etc.: they tend to reach their maximum value more easily.
+
+
+
+## Initiate DoS through block Gas Limit
+
+You may have noticed another problem in the previous example: transferring money to everyone at once is likely to cause the upper limit of the Ethereum block gas limit to be reached. Ethereum stipulates the gas limit that can be spent in each block. If it exceeds your transaction, it will fail.
+
+This can cause problems even without an intentional attack. However, the worst thing is if the gas cost is manipulated by an attacker. In the previous example, if the attacker adds a part of the collection list and sets each collection address to receive a small amount of refund. In this way, more gas will be spent to reach the upper limit of the block gas limit, and the entire transfer operation will also end in failure.
+
+Once again proved [priority to use pull rather than push payment system] (https://link.zhihu.com/?target=https%3A//github.com/ConsenSys/smart-contract-best-practices/blob/master /README-zh.md%23favor-pull-over-push-payments).
+
+If you really have to make transfers by iterating over a variable-length array, it's best to estimate how many blocks and how many transactions it will take to complete them. Then you also have to be able to keep track of where you are so you can recover from there if the operation fails, for example:
+
+```text
+struct Payee {
+    address addr;
+    uint256 value;
+}
+Payee payees[];
+uint256 nextPayeeIndex;
+
+function payOut() {
+    uint256 i = nextPayeeIndex;
+    while (i < payees.length && msg.gas > 200000) {
+      payees[i].addr.send(payees[i].value);
+      i++;
+    }
+    nextPayeeIndex = i;
+}
+```
+
+As shown above, you have to make sure that there are no other transactions that are executing before the next execution of payOut(). If you must, please use the above method to deal with.
