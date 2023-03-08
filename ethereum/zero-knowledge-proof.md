@@ -83,7 +83,7 @@ Then V generates a random number a, and will send a set of numbers to P A0 = g<s
 
 P performs the following operations.
 
-result = A0 * A1 * A2 = g<sup>a</sup> * g<sup>a<sup>2 </sup></sup>* g<sup>a<sup>3</sup>< /sup> = g<sup>a<sup>3</sup>+ a<sup>2</sup>+a</sup>
+result = A0 * A1 * A2 = g<sup>a</sup> * g<sup>a<sup>2 </sup></sup>* g<sup>a<sup>3</sup></sup> = g<sup>a<sup>3</sup>+ a<sup>2</sup>+a</sup>
 
 P just send the result back.
 
