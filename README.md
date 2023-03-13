@@ -13,6 +13,7 @@ This project will give a detailed introduction to the technical history, working
 5. [Mining: Start](./ethereum/mining-start.md)
 6. [PoS](./ethereum/pos.md)
 7. [Zero Knowledge Proof and zk-SNARK](./ethereum/zero-knowledge-proof.md)
+8. [Cross Chain](./ethereum/cross-chain.md)
 
 
 
