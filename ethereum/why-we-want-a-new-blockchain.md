@@ -4,7 +4,7 @@
 
 #### Pros and Cons about Bitcoin
 
-Despite some new use cases, such as China developing a crypto RMB based on blockchain and claiming that government allocations can reach the grassroots without any third-party involvement, some people's perception of blockchain is still getting rich overnight and gambling..
+Despite some new use cases, such as China developing a crypto RMB based on blockchain and claiming that government allocations can reach the grassroots without any third-party involvement, some people's perception of blockchain is still getting rich overnight and gambling.
 
 The high valuation of Bitcoin, which is the highest valued cryptocurrency, has largely influenced people's fascination with blockchain technology. However, from 2022 to 2023, the price of Bitcoin fell by about 70% and the financing of the blockchain industry suffered a significant decline as a result.
 
@@ -20,7 +20,7 @@ In short, the operation of Bitcoin is as follows.
 
 - Create a New Bitcoin token.
 
-  1. Transaction Collection: Bitcoin miners gather all unconfirmed transactions, as a "block."
+  1. Transaction Collection: Bitcoin miners gather all unconfirmed transactions, as a "block".
   2. Proof-of-Work: The miner calculates a unique hash value. The miner compares the hash value with a difficulty target (such as the number of leading zeros).
   3. Transaction Confirmation: The block can be submitted to the Bitcoin network, and all transactions contained in it will be confirmed, the miner receives a certain amount of new bitcoins as a reward.
 
